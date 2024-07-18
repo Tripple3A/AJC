@@ -1,0 +1,169 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:"Poppins",sans-serif;
+}
+
+
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: url("../images/image4.jpg");
+}
+
+
+h3 {
+    font-size:medium;
+    color: black;
+    user-select: none;
+    position: fixed; /* Fixed position to stay at the top of the viewport */
+    top: 0;
+    left: 0; /* Position at the top right corner */
+}
+
+
+.container{
+    width: 850px;
+    background: #fff; 
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: black;
+    
+}
+
+.container h1{
+    font-size:36px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.container .Signup{
+    width: 850px;
+    margin:30px;
+    
+}
+
+.container label{
+   color: rgba(113,99,186,255);
+   font-family: "Poppins", sans-serif;
+}
+
+
+
+.container .input-box{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap: wrap;
+}
+
+
+.container .gender{
+    display:flex;
+    justify-content:left;
+    
+}
+
+.container .gender .input-field{
+    width:150px;
+    
+}
+
+#male{
+    color: rgba(113,99,186,255);
+    font-family: "Poppins", sans-serif; 
+}
+
+
+
+.input-box .input-field{
+    position:relative;
+    width: 48%;
+    margin:13px 0;
+    height:50px;
+
+}
+
+.container .gender .input-field{
+    position:relative;
+    width: 30%;
+    margin:13px 0;
+    height:50px;
+
+}
+
+
+.input-box .input-field input{
+    width:50%;
+    height:60%;
+    background:rgba(113,99,186,255);
+    border:2px solid rgba(255,255,255,.2);
+    outline:none;
+    font-size:16px;
+    color:#fff;
+    border-radius: 6px;
+
+}
+
+
+.container .confirmation{
+    display:inline-block;
+    font-size:14.5px;
+    margin:10px 0 23px;
+}
+
+
+.container .confirmation input{
+    accent-color: blue;
+    margin-right:5px;
+
+
+}
+
+
+#register{
+    width:20%;
+    height:30px;
+    background: rgba(113,99,186,255);
+    border:none;
+    outline:none;
+    border-radius:6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor:pointer;
+    font-size:16px;
+    color:#fff;
+    font-weight:600;
+    text-align: center;
+
+
+}
+
+
+
+.container .Login{
+    font-size:14.5px;
+    text-align:center;
+    margin-top:20px;
+}
+
+.container .Login p a {
+    color:rgba(113,99,186,255);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.container .Login p a {
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+

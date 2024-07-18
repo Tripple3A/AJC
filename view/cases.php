@@ -1,11 +1,3 @@
-<?php
-include '../actions/user_assignments_action.php';
-
-// Executing the function to get all chores
-$var_data = getAllChoreAssignment();
-
-?>
-
 
 <!DOCTYPE html>
 <html>
@@ -274,9 +266,16 @@ $(document).ready(function() {
                     </a>
                 </li>
                 <li>
-                    <a href="../view/managechores.php">
+                    <a href="">
                         <i class='bx bxs-briefcase'></i>
-                    <span>Manage chores</span>
+                    <span>Report cases</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="../view/cases.php">
+                    <i class='bx bxs-user-plus'></i>
+                <span>Cases</span>
                 </a>
             </li>
             

@@ -1,8 +1,4 @@
-<?php
 
-include_once '../functions/home_fxn.php';
-
-?>
 <!DOCTYPE html>
 <html lang="en">
     <head><meta charset="utf-8">
@@ -32,13 +28,20 @@ include_once '../functions/home_fxn.php';
                 <li>
                     <a href="../admin/chore_control_view.php">
                         <i class='bx bxs-briefcase'></i>
-                    <span>Chore Management</span>
+                    <span>Cases</span>
                 </a>
             </li>
             <li>
                 <a href="../functions/get_all_assignment_fxn.php">
                     <i class='bx bxs-briefcase'></i>
-                <span>Chore Assignment</span>
+                <span>Hearings</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="../admin/chore_view.php">
+                <i class='bx bxs-briefcase'></i>
+            <span>Recommend verdict</span>
             </a>
         </li>
             <li class="logout">
@@ -89,71 +92,11 @@ include_once '../functions/home_fxn.php';
 
 
     <div class="statistics-container">
-        <h3 class="main-title">Chore statistics</h3>
+        <h3 class="main-title">School policy</h3>
         <div class="statistics-wrapper">
             
-            
-            <a href='#' style="text-decoration: none;"><div class="all-chores">
-                <div class="all-chores-header">
-                    <div class="all-chores-value">
-                        <span class="title">All Chores</span>
-                    </div> 
-                    
-                    
-                    <span class="value"><?php 
-                    
-                    echo count($var_data); ?></span>
-  
-                    <!--where i am supposed to put the icon--> 
-                </div>
-              </div></a>
-            
-            
-            
-            
-            
-            
-            <a href="../admin/admin.php" style="text-decoration: none;"><div class="progress">
-                <div class="progress-header">
-                    <div class="stats-value">
-                        <span class="title">In Progress</span>
-                    </div> 
-                    <span class="value"><?php 
-                    
-                    echo count($var_inprogress_chores_data); ?></span>   
-                    <!--where i am supposed to put the icon--> 
-                </div>
-              </div></a>
-
-
-
-
-              <a href="../admin/admin.php" style="text-decoration: none;"><div class="incomplete">
-                <div class="incomplete-header">
-                    <div class="incomplete-value">
-                        <span class="title">Incomplete</span>
-                    </div> 
-                    <span class="value"><?php 
-                    
-                    
-                    echo count($var_incomplete_chores_data); ?></span>   
-                    <!--where i am supposed to put the icon--> 
-                </div>
-            </div> </a>
 
             
-            
-            <a href="../admin/admin.php" style="text-decoration: none;"><div class="complete">
-                <div class="complete-header">
-                    <div class="complete-value">
-                        <span class="title">Completed</span>
-                    </div> 
-                    <span class="value"><?php 
-                    
-                    echo count($var_complete_chores_data); ?></span>   
-                    <!--where i am supposed to put the icon--> 
-                </div>
-            </div> </a>
              
         </div>
     </div>
@@ -163,101 +106,6 @@ include_once '../functions/home_fxn.php';
 
 
             <!--Displaying the recently assigned chores table-->
-
-         <?php
-        if ($var_recent_chores_data !== null){
-
-            
-
-      echo ' <div class="tabular-wrapper">
-
-            <h3 class="main-title">Recently assigned chores</h3>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                          <th>Chore type</th>
-                          <th>Assigned to</th>
-                          <th>Date assigned</th>
-                          <th>Date completed</th>
-                          
-
-                        </tr>
-                        <tbody>';
-                        $outerArrayLength = count($var_recent_chores_data);
-                        
-                        for ($i = 0; $i < $outerArrayLength; $i++){
-                            $current_assignment = $var_data[$i];
-                            //Retrieving the chorename using the cid attribute from the row variable
-                            $cid=$current_assignment['cid'];
-                             $chorenamequery = "SELECT chorename FROM Chores where cid = $cid";
-                             $chorenameresult = mysqli_query($connection, $chorenamequery);
-                             $row = mysqli_fetch_assoc($chorenameresult);
-                             $chorename = $row['chorename'];
-
-
-                             //Finding who it has been assigned to
-                             $aid=$current_assignment['assignmentid'];
-
-                             $query = "SELECT * FROM Assigned_people WHERE assignmentid = '$aid'";
-                             $result = mysqli_query($connection, $query);
-                             $row = mysqli_fetch_assoc($result);
-                             $pid = $row['pid'];
-
-
-                             //Retrieving the fname and lname from people table using the pid attribute from the row variable
-                             $fnamequery = "SELECT fname FROM People where pid =  $pid";
-                             $fnameresult = mysqli_query($connection, $fnamequery);
-                             $row = mysqli_fetch_assoc($fnameresult);
-                             $fname = $row['fname'];
-
-
-                             //Retrieving the fname and lname from people table using the pid attribute from the row variable
-                            $lnamequery = "SELECT lname FROM People where pid =  $pid";
-                             $lnameresult = mysqli_query($connection, $lnamequery);
-                             $row = mysqli_fetch_assoc($lnameresult);
-                            $lname = $row['lname'];
-
-
-
-                            
-
-
-                            
-
-                            echo '<tr>
-                            <td>'. $chorename. '</td>
-                            <td>'. $fname.' '. $lname. '</td>
-                            <td>'. $current_assignment['date_assign']. '</td>
-                            <td>'. $current_assignment['date_due']. '</td>
-                                
-                            </tr>';
-                        }
-                        echo '</tbody>
-                        
-
-                    </thead>
-                </table>
-
-            </div>
-
-        </div>
-</div>';
-        }
-
-?>
-
-
-
-
-
-
-
-
-    
-
-
-        
 
     </body>
 </html>

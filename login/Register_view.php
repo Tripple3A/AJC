@@ -101,45 +101,13 @@ function validation() {
                     </div>
 
 
-                    <div class = "gender">
-                        <div class="input-field">
-                        <label for="male">Gender:</label>
-                        <input type="radio" name="gender" value="0" id="male"> Male
-                        </div>
-                        
-                        <div class="input-field">
-                        <input type="radio" name="gender" value="1" id="female"> Female 
-                        </div> 
-
-                    </div>
+                    
 
                     
-                    <div class="input-box">
-                    <div class="input-field">
-                        <label for="familyrole">Select family role</label> 
-                        <select name="familyrole" id="familyrole"> 
-                        <option value="0">Select</option> 
-                         
-
-                        <?php
-                        include "../functions/select_role_fxn.php";
+                
 
 
-                        //Looping through the roles to builg the options
-                        foreach ($roles as $role) {
-                            echo '<option value="' . $role['fid'] . '">' . $role['fam_name'] . '</option>';
-                        }
-                     ?>
-                        </select>
-                    </div>
-
-
-                    <div class="input-field">
-                        <label for="dob">Date of Birth</label>
-                        <input type="date" id="dob" name="dob">
-                    </div>
-
-                    </div>
+                    
 
 
                     <div class="input-box">
@@ -180,7 +148,7 @@ function validation() {
                         </div>
 
                     <div class="Login">
-                        <p>You can now <a href="./login.html">Log in</a></p>
+                        <p>You can now <a href="../login/Login_view.php">Log in</a></p>
                     </div>
                 </form>
 

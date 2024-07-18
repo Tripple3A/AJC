@@ -22,8 +22,8 @@
             <div class="form">
                 <!--Form to be filled when sign in is clicked-->
                 <form action="../actions/login_user_action.php" method="POST" id="LoginForm" name="Form" onsubmit="return validation()">
-                    <h2>CHORE MS</h2>
-                    <p>Transforming Tasks into Triumphs!!</p>
+                    <h2>AJC MS</h2>
+                    <p>Justice Made Simple and Accessible!!</p>
                     <p id="result">head</p>
                     <div class=" input">
                     <input name="email" type="text" placeholder="Email" required id="Email">
@@ -56,7 +56,7 @@
 
                 <div class="toggle-right">
                     
-                    <img src="../images/completed.png" width="400" height="300">
+                    <img src="../images/scales.png" width="400" height="200">
 
                 </div>
 
