@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="chore icon.png">
-        <title>Chore Management System</title>
+        <title>Asjesi Judicial Management System</title>
         <link rel="stylesheet" href="../css/login.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
