@@ -8,7 +8,7 @@
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            background: url('/ashesiuni.jpeg') no-repeat center center fixed;
+            background: url('/images/ashesiuni.jpeg') no-repeat center center fixed;
             background-size: cover;
             color: #333;
             display: flex;
