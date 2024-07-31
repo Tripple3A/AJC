@@ -12,12 +12,95 @@
             background-size: cover;
             color: #333;
             display: flex;
-            justify-content: center;
+           /* justify-content: center;*/
             align-items: center;
             height: 100vh;
             overflow: auto; /* Allow scrolling on the body */
             font-size: 12px;
         }
+
+        .sidebar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 110px;
+    height: 100vh;
+    padding: 0 1.7rem 0 0; /* Removed left padding */
+    color: #fff;
+    overflow: hidden;
+    transition: all 0.5s linear;
+    background: #800020;
+}
+
+
+
+.sidebar:hover{
+    width:240px;
+    transition:0.5s;
+}
+
+.logo {
+            height: 80px;
+            padding: 16px;
+            text-align: center; /* Center the logo */
+            width: 100px; /* Set a fixed width */
+            margin: 0 auto; /* Center horizontally */
+        }
+
+        .logo img {
+            max-width: 100%;
+            height: auto;
+            max-height: 100%; /* Ensure the logo fits within the container */
+        }
+
+.menu{
+    height:88%;
+    position:relative;
+    list-style: none;
+ 
+    padding:0;
+}
+
+
+.menu li{
+    padding:1rem;
+    margin:8px 0;
+    border-radius: 8px;
+    transition: all 0.5s ease-in-out;
+}
+
+
+.menu li:hover,
+.active{
+    background:#e0e0e058;
+
+    
+}
+
+
+.menu a {
+    color:#fff;
+    font-size:14px;
+    text-decoration: none;
+    display:flex;
+    align-items:center;
+    gap:1.5rem;
+}
+
+
+.menu a span{
+    overflow:hidden;
+
+}
+
+
+.menu a i{
+    font-size:1.2rem;
+}
+
+
+
         .container {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 25px;
@@ -108,6 +191,49 @@
     </style>
 </head>
 <body>
+
+<div class="sidebar">
+<div class="logo">
+        <img src="../images/ASHLOGO.jpeg" >
+    </div>
+
+
+            
+                <ul class="menu">
+                    <li>
+                        <a href="../admin_view/admin.php">
+                            <i class='bx bxs-dashboard'></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="../admin_view/cases.php">
+                        <i class='bx bxs-briefcase'></i>
+                    <span>Cases</span>
+                </a>
+            </li>
+            <li>
+                <a href="../admin_view/schedule_hearing.php">
+                    <i class='bx bxs-briefcase'></i>
+                <span>Hearings</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="../admin_view/recommendation.php">
+                <i class='bx bxs-briefcase'></i>
+            <span>Recommend verdict</span>
+            </a>
+        </li>
+            <li class="logout">
+                <a href="../login/Logout_view.php">
+                    <i class='bx bx-log-out'></i>
+                <span>Logout</span>
+            </a>
+        </li>
+    </ul>
+
+</div>
 
     <div class="container">
         <h1 style="font-size: 50px;">Schedule Case Hearing</h1>
@@ -235,7 +361,7 @@
             // Clear form
             document.getElementById('meetingForm').reset();
         });
-    </script>c:\Users\oliver.nshimiyimana\OneDrive - Ashesi University\Desktop\trial\ashasilog.png
+    </script>
     <!-- Include EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script type="text/javascript">

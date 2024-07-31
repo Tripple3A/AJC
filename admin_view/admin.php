@@ -13,33 +13,33 @@
 
     <body>
         <div class="sidebar">
-            <div class="logo">
-                <!--<img src="" width="100" height="100">-->
-            </div>
+        <div class="logo">
+        <img src="../images/ASHLOGO.jpeg" >
+    </div>
 
             
                 <ul class="menu">
                     <li>
-                        <a href="../admin/admin.php" class="active">
+                        <a href="../admin_view/admin.php">
                             <i class='bx bxs-dashboard'></i>
                         <span>Home</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../admin/chore_control_view.php">
+                    <a href="../admin_view/cases.php">
                         <i class='bx bxs-briefcase'></i>
                     <span>Cases</span>
                 </a>
             </li>
             <li>
-                <a href="../functions/get_all_assignment_fxn.php">
+                <a href="../admin_view/schedule_hearing.php">
                     <i class='bx bxs-briefcase'></i>
                 <span>Hearings</span>
             </a>
         </li>
 
         <li>
-            <a href="../admin/chore_view.php">
+            <a href="../admin_view/recommendation.php">
                 <i class='bx bxs-briefcase'></i>
             <span>Recommend verdict</span>
             </a>

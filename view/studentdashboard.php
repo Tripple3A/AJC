@@ -1,47 +1,45 @@
 
-
-
-
 <!DOCTYPE html>
 <html lang="en">
     <head><meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="chore icon.png">
-        <title>Chore Management System</title>
-        <link rel="stylesheet" href="../css/dashboard.css">
+        <title>Ashesi Judicial Management System</title>
+        <link rel="stylesheet" href="../css/admin.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
 
     <body>
         <div class="sidebar">
-            <div class="logo">
-                <!--<img src="" width="100" height="100">-->
-            </div>
+        <div class="logo">
+        <img src="../images/ASHLOGO.jpeg" >
+    </div>
 
             
                 <ul class="menu">
                     <li>
-                        <a href="../view/dashboard.php" class="active">
+                        <a href="../view/studentdashboard.php">
                             <i class='bx bxs-dashboard'></i>
                         <span>Home</span>
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="../view/report.php">
                         <i class='bx bxs-briefcase'></i>
-                    <span>Report case</span>
+                    <span>Report Cases</span>
                 </a>
             </li>
-
             <li>
                 <a href="../view/cases.php">
-                    <i class='bx bxs-user-plus'></i>
-                    <span>Cases</span>
-                </a>
-            </li>
-            <li class="../login/Logout_view.php">
+                    <i class='bx bxs-briefcase'></i>
+                <span>Cases</span>
+            </a>
+        </li>
+
+        
+            <li class="logout">
                 <a href="../login/Logout_view.php">
                     <i class='bx bx-log-out'></i>
                 <span>Logout</span>
@@ -61,10 +59,10 @@
         </div>
 
         <div class="user-info">
-        <?php
-           // session_start();
+            <?php
+            session_start();
 
-            
+            //include "../settings/connection.php";
 
             if (isset($_SESSION['user_id'])) {
                 $id = $_SESSION['user_id'];
@@ -72,7 +70,7 @@
                 $result = mysqli_query($connection, $query);
                 $row = mysqli_fetch_assoc($result);
 
-                echo '<h3>Welcome '. $row['fname'].' '. $row['lname']. '</h3>';
+                echo '<h3>Welcome '. $row['fname'].''. $row['lname']. '</h3>';
 
                 
                 
@@ -89,9 +87,10 @@
 
 
     <div class="statistics-container">
-        <h3 class="main-title">School policies</h3>
+        <h3 class="main-title">School policy</h3>
         <div class="statistics-wrapper">
             
+
             
              
         </div>
@@ -99,17 +98,9 @@
 
 
 
-         
 
 
-
-
-
-
-    
-
-
-        
+            <!--Displaying the recently assigned chores table-->
 
     </body>
 </html>
