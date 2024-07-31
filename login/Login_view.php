@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="chore icon.png">
-        <title>Asjesi Judicial Management System</title>
+        <title>AJMS</title>
         <link rel="stylesheet" href="../css/login.css">
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     </head>
@@ -22,11 +22,11 @@
             <div class="form">
                 <!--Form to be filled when sign in is clicked-->
                 <form action="../actions/login_user_action.php" method="POST" id="LoginForm" name="Form" onsubmit="return validation()">
-                    <h2>AJC MS</h2>
-                    <p>Justice Made Simple and Accessible!!</p>
-                    <p id="result">head</p>
-                    <div class=" input">
-                    <input name="email" type="text" placeholder="Email" required id="Email">
+                    <h2 style="color: rgb(146, 61, 65);">AJC MS</h2>
+                    <p style="color: rgb(146, 61, 65);">Justice Made Simple and Accessible!!</p>
+                    <p id="result" style="color: rgb(146, 61, 65);">head</p>
+                    <div class=" input" style="color: rgb(146, 61, 65);" >
+                    <input style="color: rgb(146, 61, 65);" name="email" type="text" placeholder="Email" required id="Email">
                     <i class='bx bx-user'></i>
                     </div>
                     <div class="input">
@@ -39,15 +39,15 @@
                     </div>
 
                     <div class="remember-forgot">
-                        <label><input type="checkbox">Remember me</label>
-                        <a href="#">Forgot password?</a>
+                        <label><input style="color: rgb(146, 61, 65);" type="checkbox">Remember me</label>
+                        <a style="color: rgb(146, 61, 65);" href="#">Forgot password?</a>
 
                     </div>
 
-                    <button name = 'login' type="submit" class="Login">Login</button>
+                    <button name = 'login' type="submit" class="Login" style="color: rgb(146, 61, 65);">Login</button>
 
                     <div class="register">
-                        <p>Don't have an account?<a href="../login/Register_view.php">Register</a></p>
+                        <p style="color: rgb(146, 61, 65);">Don't have an account?<a style="color: rgb(146, 61, 65);"href="../login/Register_view.php">Register</a></p>
                     </div>
                 </form>
 
@@ -56,7 +56,7 @@
 
                 <div class="toggle-right">
                     
-                    <img src="../images/scales.png" width="400" height="200">
+                    <img src="../images/just2.png" >
 
                 </div>
 

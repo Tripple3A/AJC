@@ -4,7 +4,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="chore icon.png">
-        <title>Ashesi Judicial Management System</title>
+        <title>AJMS</title>
         <link rel="stylesheet" href="../css/registration.css">
         
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -75,7 +75,7 @@ function validation() {
                 <div id="error"></div>
                 <form action="../actions/register_user_action.php" method="POST" class="Signup" id="registration"  name="registration" onsubmit="return validation()">
 
-                    <h1>Registration</h1>
+                    <h1 style="color: rgb(146, 61, 65);">Registration</h1>
                     <?php
                     if (!empty($errors)) {
     echo "<ul>";
@@ -91,12 +91,12 @@ function validation() {
 
                     <div class="input-box">
                        <div class="input-field">
-                        <label for="firstname">Firstname</label>
-                    <input name="firstname" type="text"  required id="firstname">
+                        <label for="firstname"style="color: rgb(146, 61, 65);">Firstname</label>
+                    <input style="background-color: rgb(146, 61, 65);" name="firstname" type="text"  required id="firstname" style="color: rgb(146, 61, 65);">
                     </div>
                     <div class="input-field">
-                        <label for="lastname">Lastname</label>
-                    <input name="lastname" type="text"  required id="lastname">
+                        <label for="lastname" style="color: rgb(146, 61, 65);">Lastname</label>
+                    <input style="background-color: rgb(146, 61, 65);" name="lastname" type="text"  required id="lastname">
                     </div>
                     </div>
 
@@ -112,14 +112,14 @@ function validation() {
 
                     <div class="input-box">
                         <div class="input-field">
-                        <label for="phone">Phone Number:</label>
-                        <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+                        <label for="phone" style="color: rgb(146, 61, 65);">Phone Number:</label>
+                        <input style="background-color: rgb(146, 61, 65);" type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
 
                         </div>
 
                     <div class="input-field">
-                        <label for="email">Email:</label>
-                        <input name="email" type="text"  required id="email">
+                        <label for="email" style="color: rgb(146, 61, 65);">Email:</label>
+                        <input style="background-color: rgb(146, 61, 65);" name="email" type="text"  required id="email">
                         </div>
 
                     </div>
@@ -127,28 +127,28 @@ function validation() {
 
                     <div class = "input-box">
                     <div class="input-field">
-                        <label for="psw">Password</label>                    
-                        <input name = "psw" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
+                        <label for="psw" style="color: rgb(146, 61, 65);">Password</label>                    
+                        <input style="background-color: rgb(146, 61, 65);" name = "psw" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
                  id="psw">
                     </div>
 
                     <div class="input-field">
-                    <label for="psw2" >Confirm Password</label>
-                    <input type="password" name="psw2" 
+                    <label for="psw2" style="color: rgb(146, 61, 65);" >Confirm Password</label>
+                    <input style="background-color: rgb(146, 61, 65);" type="password" name="psw2" 
                     id="psw2" required>
                     </div>
                     </div>
 
 
-                    <label class="confirmation" value=1><input type="checkbox" name= "confirmation" id="confirmation">I hereby declare that the above 
+                    <label class="confirmation" value=1><input type="checkbox" name= "confirmation" id="confirmation"style="color: rgb(146, 61, 65);">I hereby declare that the above 
                     information is true and correct</label>
 
                         <div>
-                    <button name="register" type="submit" id="#register">Register</button>
+                    <button name="register" type="submit" id="#register"style="color: rgb(146, 61, 65);">Register</button>
                         </div>
 
                     <div class="Login">
-                        <p>You can now <a href="../login/Login_view.php">Log in</a></p>
+                        <p>You can now <a href="../login/Login_view.php"style="color: rgb(146, 61, 65);">Log in</a></p>
                     </div>
                 </form>
 
