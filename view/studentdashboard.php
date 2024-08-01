@@ -20,7 +20,7 @@
             
                 <ul class="menu">
                     <li>
-                        <a href="../view/studentdashboard.php">
+                        <a href="../view/student_home.php">
                             <i class='bx bxs-dashboard'></i>
                         <span>Home</span>
                     </a>
