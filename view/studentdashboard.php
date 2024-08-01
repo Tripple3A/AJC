@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li>
-                <a href="../view/cases.php">
+                <a href="../view/student_cases.php">
                     <i class='bx bxs-briefcase'></i>
                 <span>Cases</span>
             </a>
