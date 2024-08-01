@@ -22,7 +22,7 @@ if(isset($_POST['login'])){
 
 
         //Query to check if the user exists
-    $query = "SELECT * FROM People WHERE email = '$email'";
+    $query = "SELECT * FROM Users WHERE email = '$email'";
     $result = mysqli_query($connection, $query);
     $user = mysqli_fetch_assoc($result);
 
@@ -44,10 +44,10 @@ if(isset($_POST['login'])){
 
             //User then exists
             //Retrieving the hashed password from the database
-            $passwdquery = "SELECT passwd FROM People WHERE email= '$email'";
+            $passwdquery = "SELECT psw FROM Users WHERE email= '$email'";
             $passwdresult = mysqli_query($connection,$passwdquery);
             $row = mysqli_fetch_assoc($passwdresult);
-            $hashedpasswd = $row['passwd'];
+            $hashedpasswd = $row['psw'];
 
 
 
@@ -55,16 +55,16 @@ if(isset($_POST['login'])){
             if(password_verify($password, $hashedpasswd)){
                 //passwords meatch meaning log in was successful
                 //storing user id and role id
-                $user_query = "SELECT pid FROM People WHERE email= '$email'";
+                $user_query = "SELECT user_id FROM Users WHERE email= '$email'";
                 $user_id_result = mysqli_query($connection,$user_query);
                 $user_row = mysqli_fetch_assoc($user_id_result);
-                $user_id_value = $user_row['pid'];
+                $user_id_value = $user_row['user_id'];
 
 
-                $rid_query = "SELECT rid FROM People WHERE email= '$email'";
+                $rid_query = "SELECT role_id FROM Users WHERE email= '$email'";
                 $rid_result = mysqli_query($connection,$rid_query);
                 $rid_row = mysqli_fetch_assoc($rid_result);
-                $rid_value = $rid_row['rid'];
+                $rid_value = $rid_row['role_id'];
 
 
 
@@ -76,24 +76,19 @@ if(isset($_POST['login'])){
                 //Redirecting admins to admin pages and regular users to homepage
                 //Admins, mother and father with fid, 1, 2
                 
-                $rid_query = "SELECT rid FROM People WHERE email= '$email'";
-                $rid_result = mysqli_query($connection,$rid_query);
-                $rid_row = mysqli_fetch_assoc($rid_result);
-                $rid_value = $rid_row['rid'];
+                
 
                
 
                 if($rid_value == 1){
                     
-                    header("Location:../admin/admin.php");
+                    header("Location:../view/student_home.php");
                 }
                 else if($rid_value == 2){
                     
-                    header("Location:../admin/secondary_admin.php");
+                    header("Location:../admin_view/home_admin.php");
                 }
-                else if($rid_value == 3){
-                    header("Location:../view/dashboard.php");
-                }
+                
             }    
 
             }

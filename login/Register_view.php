@@ -111,11 +111,24 @@ function validation() {
 
 
                     <div class="input-box">
-                        <div class="input-field">
-                        <label for="phone" style="color: rgb(146, 61, 65);">Phone Number:</label>
-                        <input style="background-color: rgb(146, 61, 65);" type="tel" id="phone" name="phone" pattern="[0-9]{10}" required>
+                    
+                    <div class="input-field">
+                        <label style="color: rgb(146, 61, 65);" for="role">Select role</label> 
+                        <select name="role" id="role"> 
+                        <option value="0">Select</option> 
+                         
 
-                        </div>
+                        <?php
+                        include "../functions/select_role.php";
+
+
+                        //Looping through the roles to builg the options
+                        foreach ($roles as $role) {
+                            echo '<option value="' . $role['role_id'] . '">' . $role['role_name'] . '</option>';
+                        }
+                     ?>
+                        </select>
+                    </div>
 
                     <div class="input-field">
                         <label for="email" style="color: rgb(146, 61, 65);">Email:</label>

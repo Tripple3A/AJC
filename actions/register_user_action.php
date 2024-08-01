@@ -18,10 +18,7 @@ if(isset($_POST['register'])){
     $firstname = mysqli_real_escape_string($connection, $_POST['firstname']);
     $lastname = mysqli_real_escape_string($connection, $_POST['lastname']);
     $email = mysqli_real_escape_string($connection, $_POST['email']);
-    $gender = mysqli_real_escape_string($connection, $_POST['gender']);
-    $fid = mysqli_real_escape_string($connection, $_POST['familyrole']);
-    $dob = mysqli_real_escape_string($connection, $_POST['dob']);
-    $Phone = mysqli_real_escape_string($connection, $_POST['phone']);
+    $rid = mysqli_real_escape_string($connection, $_POST['role']);
     $psw = mysqli_real_escape_string($connection, $_POST['psw']);
     $psw2 = mysqli_real_escape_string($connection, $_POST['psw2']);
     
@@ -36,9 +33,7 @@ if(isset($_POST['register'])){
     if(empty($firstname)){array_push($errors, "firstname is required");}
     if(empty($lastname)){array_push($errors, "lastname is required");}
     if(empty($email)){array_push($errors, "email is required");}
-    if(empty($fid)){array_push($errors, "family role is required");}
-    if(empty($dob)){array_push($errors, "Date of birth is required");}
-    if(empty($Phone)){array_push($errors, "phone number is required");}
+    if(empty($rid)){array_push($errors, "role is required");}
     if(empty($psw)){array_push($errors, "password is required");}
     if(empty($psw2)){array_push($errors, "please confirm your password");}
     
@@ -58,8 +53,8 @@ if(isset($_POST['register'])){
 
         //if no errors are found
     //Checking the database to make sure that the user does not exist
-    //Assuming that a persons email and dob makes them unique
-    $user_check_query = "SELECT * FROM people WHERE dob='$dob' OR email='$email' LIMIT 1";
+    //Assuming that a persons email makes them unique
+    $user_check_query = "SELECT * FROM Users WHERE email='$email' LIMIT 1";
     $result = mysqli_query($connection, $user_check_query);
     $user = mysqli_fetch_assoc($result);
 
@@ -95,22 +90,19 @@ if (!empty($errors)) {
         $hashedPassword = password_hash($psw, PASSWORD_DEFAULT);
 
         // Determine the role ID based on the family role, default role id is 3
-        if($fid==1){
+        if($rid==1){
             $roleId = 1;
         }
 
-        else if($fid==2){
+        else if($rid==2){
             $roleId=2;
         }
 
-        else {
-            $roleId=3;
-        }
         
 
         //INSERT query to insert into database
-        $query = "INSERT INTO People (rid,fid,fname,lname,gender,dob,tel,email,passwd) VALUES ($roleId,
-        '$fid','$firstname','$lastname','$gender','$dob','$Phone','$email','$hashedPassword')";
+
+        $query = "INSERT INTO Users (fname,lname,email,role_id,psw) VALUES ('$firstname','$lastname','$email','$roleId','$hashedPassword')";
 
        
 
