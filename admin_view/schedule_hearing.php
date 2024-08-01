@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Case Hearing Schedule</title>
+    <title>AJMS</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -201,13 +201,13 @@
             
                 <ul class="menu">
                     <li>
-                        <a href="../admin_view/admin.php">
+                        <a href="../admin_view/home_admin.php">
                             <i class='bx bxs-dashboard'></i>
                         <span>Home</span>
                     </a>
                 </li>
                 <li>
-                    <a href="../admin_view/cases.php">
+                    <a href="../admin_view/admin_case.php">
                         <i class='bx bxs-briefcase'></i>
                     <span>Cases</span>
                 </a>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashesi Judicial System Report</title>
+    <title>AJMS</title>
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -192,7 +192,7 @@
             
                 <ul class="menu">
                     <li>
-                        <a href="../view/studentdashboard.php">
+                        <a href="../view/student_home.php">
                             <i class='bx bxs-dashboard'></i>
                         <span>Home</span>
                     </a>
@@ -204,7 +204,7 @@
                 </a>
             </li>
             <li>
-                <a href="../view/cases.php">
+                <a href="../view/student_cases.php">
                     <i class='bx bxs-briefcase'></i>
                 <span>Cases</span>
             </a>
