@@ -117,12 +117,13 @@
             margin-bottom: 10px;
         }
         form {
-            background-color: #fff;
+           background-color: #fff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             text-align: left; /* Align text to the left for form fields */
+            
         }
         .form-group {
             margin-bottom: 15px;
@@ -180,6 +181,8 @@
             background-color: #800020; /* Wine color */
             color: white;
         }
+
+        
     </style>
 </head>
 <body>
@@ -244,12 +247,21 @@
             </div>
             <div class="form-group">
                 <label for="caseType">Select Case Type:</label>
-                <select id="caseType">
-                    <option value="criminal">Criminal</option>
-                    <option value="civil">Civil</option>
-                    <option value="family">Family</option>
-                    <option value="property">Property</option>
-                </select>
+                <select name="caseType" id="caseType"> 
+                        <option value="0">Select</option> 
+                         
+
+                        <?php
+                        include "../functions/select_case_type.php";
+
+
+                        //Looping through the roles to builg the options
+                        foreach ($roles as $role) {
+                            
+                            echo '<option value="' . $role['case_type_id'] . '">' . $role['case_type_description'] . '</option>';
+                        }
+                     ?>
+                        </select>
             </div>
             <div class="form-group">
                 <label for="caseDetails">Case Details:</label>
@@ -264,37 +276,41 @@
     </div>
 
     <script>
-        // Function to handle form submission
-        function submitReport(event) {
-            event.preventDefault(); // Prevent the default form submission
+    // Function to handle form submission
+    async function submitReport(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-            const studentName = document.getElementById('studentName').value;
-            const caseTitle = document.getElementById('caseTitle').value;
-            const caseType = document.getElementById('caseType').value;
-            const caseDetails = document.getElementById('caseDetails').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const email = document.getElementById('email').value;
-            const evidence = document.getElementById('evidence').files[0];
+        const formData = new FormData();
+        
+        
+        
+        formData.append('caseTitle', document.getElementById('caseTitle').value);
+        formData.append('caseType', document.getElementById('caseType').value);
+        formData.append('caseDetails', document.getElementById('caseDetails').value);
+        if (document.getElementById('evidence').files[0]) {
+            formData.append('evidence', document.getElementById('evidence').files[0]);
+        }
 
-            // Normally, here you would send the data to the server using AJAX or fetch API
-            // For demonstration purposes, we will just log the values
-            console.log({
-                studentName,
-                caseTitle,
-                caseType,
-                caseDetails,
-                phoneNumber,
-                email,
-                evidence: evidence ? evidence.name : 'No file uploaded'
+        try {
+            const response = await fetch('../actions/report_case.php', {
+                method: 'POST',
+                body: formData
             });
 
-            // Display confirmation message (optional)
-            alert('Report submitted successfully!');
-
-            // Clear the form
-            document.getElementById('reportForm').reset();
+            if (response.ok) {
+                const result = await response.json();
+                alert('Report submitted successfully!');
+                document.getElementById('reportForm').reset();
+            } else {
+                alert('Error submitting report. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error submitting report. Please try again.');
         }
-    </script>
+    }
+</script>
+
 
 </body>
 </html>

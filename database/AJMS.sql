@@ -50,6 +50,7 @@ CREATE TABLE `Reports` (
   `date_reported` DATE NOT NULL,
   `title` VARCHAR(255) NOT NULL,
   `user_id` INT NOT NULL,
+  `evidence` VARCHAR(255), -- This column stores the file path or URL of the evidence
   FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -90,3 +91,27 @@ CREATE TABLE `Verdict` (
   PRIMARY KEY (`case_id`, `verdict_date`),
   FOREIGN KEY (`case_id`) REFERENCES `Cases`(`case_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- Add CaseType table
+CREATE TABLE `CaseType` (
+  `case_type_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `case_type_description` VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Insert default case types into the CaseType table
+INSERT INTO `CaseType` (`case_type_description`) VALUES 
+('Academic Integrity'), 
+('Behavioral Misconduct'), 
+('Harassment'), 
+('Discrimination'), 
+('Substance Abuse'), 
+('Vandalism'), 
+('Theft'), 
+('Other');
+
+-- Modify Cases table to reference CaseType
+ALTER TABLE `Cases`
+  ADD `case_type_id` INT NOT NULL,
+  ADD FOREIGN KEY (`case_type_id`) REFERENCES `CaseType`(`case_type_id`);
+
