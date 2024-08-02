@@ -24,7 +24,7 @@ CREATE TABLE `Users` (
   `lname` VARCHAR(50) NOT NULL,
   `email` VARCHAR(255) NOT NULL UNIQUE,
   `role_id` INT NOT NULL,
-   `psw` varchar(100) NOT NULL,
+  `psw` VARCHAR(100) NOT NULL,
   FOREIGN KEY (`role_id`) REFERENCES `Roles`(`role_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -41,19 +41,42 @@ CREATE TABLE `Policy` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
--- Table structure for table `Cases`
+-- Table structure for table `Reports`
 --
 
+CREATE TABLE `Reports` (
+  `report_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `report_description` TEXT NOT NULL,
+  `date_reported` DATE NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `user_id` INT NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+-- Table structure for table `VerdictStatus`
+--
+
+CREATE TABLE `VerdictStatus` (
+  `verdict_status_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `verdict_status_description` VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Insert some default verdict statuses into the VerdictStatus table
+INSERT INTO `VerdictStatus` (`verdict_status_description`) VALUES ('Pending'), ('Under Investigation'), ('Closed'), ('Resolved');
+
+-- --------------------------------------------------------
+-- Table structure for table `Cases`
+--
 CREATE TABLE `Cases` (
   `case_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `report_id` INT NOT NULL,
+  `verdict_status_id` INT NOT NULL DEFAULT 1,
   `user_id` INT NOT NULL,
-  `policy_id` INT NOT NULL,
-  `description` TEXT NOT NULL,
-  `verdict_status` VARCHAR(255) NOT NULL,
-  `type` VARCHAR(255) NOT NULL,
   `report_date` DATE NOT NULL,
-  FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`) ON DELETE CASCADE,
-  FOREIGN KEY (`policy_id`) REFERENCES `Policy`(`policy_id`) ON DELETE CASCADE
+  FOREIGN KEY (`report_id`) REFERENCES `Reports`(`report_id`),
+  FOREIGN KEY (`verdict_status_id`) REFERENCES `VerdictStatus`(`verdict_status_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

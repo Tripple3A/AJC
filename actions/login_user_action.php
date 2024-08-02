@@ -101,9 +101,9 @@ if(isset($_POST['login'])){
             }
 
             // Storing errors in the session and redirecting
-    $_SESSION['errors'] = $errors;
-    header("Location: ../login/Login_view.php");
-    exit();
+    //$_SESSION['errors'] = $errors;
+    //header("Location: ../login/Login_view.php");
+   // exit();
 
            
         }
