@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="chore icon.png">
-    <title>AJMS</title>
+    <title>Chore Management System - Admin</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
@@ -25,7 +25,6 @@
             overflow: auto; /* Allow scrolling on the body */
            
         }
-
         .sidebar {
     position: sticky;
     top: 0;
@@ -113,6 +112,8 @@
             flex-grow:1;
             overflow-y: auto;
         }
+
+        
         .search-bar {
             margin-bottom: 20px;
         }
@@ -164,12 +165,16 @@
         .modal-title {
             color: #722f37; /* Wine color */
         }
-
-       
+        .content-section {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
     </style>
 </head>
 <body>
-<div class="sidebar">
+    <div class="sidebar">
         <div class="logo">
         <img src="../images/ASHLOGO.jpeg" >
     </div>
@@ -212,14 +217,16 @@
 </div>
 
 
+
     <div class="main-content">
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="#">University Policies</a>
+            <a class="navbar-brand" href="#">Dashboard</a>
         </nav>
 
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <div class="search-bar"><br>
+                <div class="search-bar">
+                    <br>
                     <input type="text" class="form-control" id="searchInput" placeholder="Search for a policy...">
                 </div>
                 <button class="btn btn-wine" data-toggle="modal" data-target="#addPolicyModal">
@@ -228,14 +235,50 @@
             </div>
 
             <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="mb-0">Policy List</h5>
+                <div class="col-md-3">
+                    <div class="list-group" id="menu">
+                        <button class="list-group-item list-group-item-action" onclick="showSection('policyListSection')">Policy List</button>
+                        <button class="list-group-item list-group-item-action" onclick="showSection('reportSection')">Generate Report</button>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div id="policyListSection" class="content-section active">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Policy List</h5>
+                            </div>
+                            <ul class="list-group list-group-flush" id="policyList">
+                                <!-- Policy list items will be dynamically loaded here -->
+                            </ul>
                         </div>
-                        <ul class="list-group list-group-flush" id="policyList">
-                            <!-- Policy list items will be dynamically loaded here -->
-                        </ul>
+                    </div>
+
+                    <div id="reportSection" class="content-section">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0">Generate Report</h5>
+                            </div>
+                            <div class="card-body">
+                                <button class="btn btn-wine" onclick="generateReport()">Generate Report</button>
+                                <div id="reportContent" class="mt-3">
+                                    <!-- Report content will be dynamically loaded here -->
+                                    <canvas id="reportChart"></canvas>
+                                    <table class="table table-bordered mt-3">
+                                        <thead>
+                                            <tr>
+                                                <th>Case Category</th>
+                                                <th>Number of Cases</th>
+                                                <th>Completed Cases</th>
+                                                <th>Pending Cases</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="reportTableBody">
+                                            <!-- Table rows will be dynamically added here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -270,15 +313,24 @@
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         // Mock data for policies
         const policies = [
             { id: 1, title: 'Attendance Policy', description: 'Policy regarding student attendance.' },
             { id: 2, title: 'Disciplinary Actions', description: 'Policy for handling student discipline.' },
             { id: 3, title: 'Academic Integrity', description: 'Policy on academic honesty and integrity.' }
+        ];
+
+        // Mock data for cases
+        const cases = [
+            { id: 1, category: 'Sexual', reportedTime: '2023-01-15', resolvedTime: '2023-01-20' },
+            { id: 2, category: 'Harassment', reportedTime: '2023-02-12', resolvedTime: '2023-02-15' },
+            { id: 3, category: 'Bullying', reportedTime: '2023-03-05', resolvedTime: null },
+            // Add more cases as needed
         ];
 
         // Render policies
@@ -351,6 +403,96 @@
             renderPolicies();
             $('#addPolicyModal').modal('hide');
         });
+
+        // Function to generate report
+        function generateReport() {
+            const reportContent = document.getElementById('reportContent');
+            const reportTableBody = document.getElementById('reportTableBody');
+            const ctx = document.getElementById('reportChart').getContext('2d');
+            
+            const categories = {};
+            const completedCases = {};
+            const pendingCases = {};
+
+            cases.forEach(c => {
+                if (!categories[c.category]) {
+                    categories[c.category] = 0;
+                    completedCases[c.category] = 0;
+                    pendingCases[c.category] = 0;
+                }
+                categories[c.category]++;
+                if (c.resolvedTime) {
+                    completedCases[c.category]++;
+                } else {
+                    pendingCases[c.category]++;
+                }
+            });
+
+            // Clear previous content
+            reportTableBody.innerHTML = '';
+            
+            // Populate the table
+            for (const category in categories) {
+                const row = `
+                    <tr>
+                        <td>${category}</td>
+                        <td>${categories[category]}</td>
+                        <td>${completedCases[category]}</td>
+                        <td>${pendingCases[category]}</td>
+                    </tr>
+                `;
+                reportTableBody.innerHTML += row;
+            }
+
+            // Generate chart
+            const chartData = {
+                labels: Object.keys(categories),
+                datasets: [
+                    {
+                        label: 'Total Cases',
+                        data: Object.values(categories),
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Completed Cases',
+                        data: Object.values(completedCases),
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Pending Cases',
+                        data: Object.values(pendingCases),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            };
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Function to show/hide sections
+        function showSection(sectionId) {
+            const sections = document.getElementsByClassName('content-section');
+            for (let i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            document.getElementById(sectionId).classList.add('active');
+        }
     </script>
 </body>
 </html>

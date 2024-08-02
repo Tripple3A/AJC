@@ -89,9 +89,23 @@ if(isset($_POST['login'])){
                     header("Location:../admin_view/home_admin.php");
                 }
                 
-            }    
+            } 
+
+            
+            else {
+                // Passwords do not match
+                array_push($errors, "Incorrect password. Please try again.");
+                
+            }  
 
             }
+
+            // Storing errors in the session and redirecting
+    $_SESSION['errors'] = $errors;
+    header("Location: ../login/Login_view.php");
+    exit();
+
+           
         }
 
 
