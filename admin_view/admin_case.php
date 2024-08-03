@@ -15,7 +15,7 @@
             background-attachment: fixed;
             background-repeat: no-repeat;
            /* margin: 0;*/
-            background: url('/ashesiuni.jpeg') no-repeat center center fixed;
+            /*background: url('/ashesiuni.jpeg') no-repeat center center fixed;*/
             
             color: #333;
             display: flex;
@@ -207,39 +207,35 @@
                 </tr>
             </thead>
             <tbody id="casesTable">
-                <!-- Sample rows -->
-                <tr>
-                    <td>1</td>
-                    <td>Missing item in dorm</td>
-                    <td>2024-07-21</td>
-                    <td>
-                        <select class="form-control" onchange="updateStatus(this)">
-                            <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
-                        </select>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" onclick="editCase(this)">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteCase(this)">Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Roommate conflict</td>
-                    <td>2024-07-19</td>
-                    <td>
-                        <select class="form-control" onchange="updateStatus(this)">
-                            <option value="Pending">Pending</option>
-                            <option value="Completed" selected>Completed</option>
-                        </select>
-                    </td>
-                    <td>
-                        <button class="btn btn-warning btn-sm" onclick="editCase(this)">Edit</button>
-                        <button class="btn btn-danger btn-sm" onclick="deleteCase(this)">Delete</button>
-                    </td>
-                </tr>
-                <!-- Additional rows can be added here -->
-            </tbody>
+        <?php
+        // Include the file to get all cases
+        include '../functions/get_all_cases.php';
+
+        // Include the file to get verdict statuses
+        include '../functions/get_all_verdict_status.php';
+
+        // Generate table rows from the cases array
+        foreach ($cases as $case) {
+            echo '<tr>';
+            echo '<td>' . htmlspecialchars($case['case_id']) . '</td>';
+            echo '<td>' . htmlspecialchars($case['case_description']) . '</td>';
+            echo '<td>' . htmlspecialchars($case['report_date']) . '</td>';
+            echo '<td>';
+            echo '<select class="form-control" onchange="updateStatus(this, ' . htmlspecialchars($case['case_id']) . ')">';
+            foreach ($roles as $role) {
+                $selected = $role['verdict_status_description'] === $case['status'] ? 'selected' : '';
+                echo '<option value="' . htmlspecialchars($role['verdict_status_description']) . '" ' . $selected . '>' . htmlspecialchars($role['verdict_status_description']) . '</option>';
+            }
+            echo '</select>';
+            echo '</td>';
+            echo '<td>';
+            echo '<button class="btn btn-warning btn-sm" onclick="editCase(this, ' . htmlspecialchars($case['case_id']) . ')">Edit</button>';
+            echo '<button class="btn btn-danger btn-sm" onclick="deleteCase(this, ' . htmlspecialchars($case['case_id']) . ')">Delete</button>';
+            echo '</td>';
+            echo '</tr>';
+        }
+        ?>
+        </tbody>
         </table>
     </div>
 
@@ -277,9 +273,14 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<!-- Popper.js (necessary for Bootstrap 4) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         // JavaScript for search functionality
         document.getElementById('searchInput').addEventListener('keyup', function() {
@@ -298,29 +299,43 @@
             }
         });
 
-        // JavaScript functions to handle case actions
-        function updateStatus(selectElement) {
+       // JavaScript functions to handle case actions
+       function updateStatus(selectElement, caseId) {
             var status = selectElement.value;
-            console.log("Status updated to: " + status);
-            // Implement your status update logic here
+            $.ajax({
+                url: '../actions/update_cases.php',
+                type: 'POST',
+                data: {
+                    action: 'update_status',
+                    case_id: caseId,
+                    status: status
+                },
+                success: function(response) {
+                    alert('Case status updated successfully');
+                },
+                error: function(xhr, status, error) {
+                    alert('An error occurred while updating the case status');
+                }
+            });
         }
 
-        function editCase(button) {
+        function deleteCase(button, caseId) {
             var row = button.parentElement.parentElement;
-            var caseId = row.cells[0].innerText;
-            var description = row.cells[1].innerText;
-            var dateReported = row.cells[2].innerText;
-            var status = row.cells[3].children[0].value;
-
-            // Implement your edit logic here
-            console.log("Editing case:", caseId, description, dateReported, status);
-        }
-
-        function deleteCase(button) {
-            var row = button.parentElement.parentElement;
-            row.remove();
-            // Implement your delete logic here
-            console.log("Case deleted");
+            $.ajax({
+                url: '../actions/update_cases.php',
+                type: 'POST',
+                data: {
+                    action: 'delete_case',
+                    case_id: caseId
+                },
+                success: function(response) {
+                    row.remove();
+                    alert('Case deleted successfully');
+                },
+                error: function(xhr, status, error) {
+                    alert('An error occurred while deleting the case');
+                }
+            });
         }
 
         // Handle add case form submission

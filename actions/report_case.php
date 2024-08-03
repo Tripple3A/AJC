@@ -44,8 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Insert report into the Reports table
-    
-
     $dateReported = date('Y-m-d');
     $insertReportQuery = "INSERT INTO Reports (report_description, date_reported, title, user_id, evidence)
                           VALUES ('$caseDetails', '$dateReported', '$caseTitle', $userId, '$evidencePath')";
@@ -58,15 +56,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insertCaseQuery = "INSERT INTO Cases (report_id, verdict_status_id, user_id, report_date)
                             VALUES ($reportId, 1, $userId, '$reportDate')";
 
+        if (mysqli_query($connection, $insertCaseQuery)) {
+            $caseId = mysqli_insert_id($connection);
 
+            // Insert verdict into the Verdict table
+            $verdictDescription = 'Pending'; // Default verdict status
+            $verdictDate = date('Y-m-d');
+            $insertVerdictQuery = "INSERT INTO Verdict (case_id, verdict_description, verdict_date)
+                                   VALUES ($caseId, '$verdictDescription', '$verdictDate')";
 
-
-        if (!mysqli_query($connection, $insertCaseQuery)) {
-            echo json_encode(array('db' => 'Failed to insert report: ' . mysqli_error($connection)));
-            exit();
+            if (mysqli_query($connection, $insertVerdictQuery)) {
+                echo json_encode(array('success' => true));
+            } else {
+                echo json_encode(array('db' => 'Failed to insert verdict: ' . mysqli_error($connection)));
+            }
+        } else {
+            echo json_encode(array('db' => 'Failed to insert case: ' . mysqli_error($connection)));
         }
-
-        echo json_encode(array('success' => true));
     } else {
         echo json_encode(array('db' => 'Failed to insert report: ' . mysqli_error($connection)));
     }

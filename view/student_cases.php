@@ -14,7 +14,7 @@
             background-position: center;
             background-attachment: fixed;
             background-repeat: no-repeat;
-            background: url('/ashesiuni.jpeg') no-repeat center center fixed;
+            /*background: url('/ashesiuni.jpeg') no-repeat center center fixed;*/
             color: #333;
             display: flex;
             font-size: 20px;
