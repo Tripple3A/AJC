@@ -8,7 +8,7 @@
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            background: url('/ashesiuni.jpeg') no-repeat center center fixed;
+            
             background-size: cover;
             color: #333;
             display: flex;
@@ -226,7 +226,7 @@
 
     <div class="container">
         <h1>Ashesi Judicial System Report</h1>
-        <form id="reportForm" onsubmit="submitReport(event)">
+        <form id="reportForm" >
             <div class="form-group">
                 <label for="studentName">Student Name</label>
                 <input type="text" id="studentName" name="studentName" required>
@@ -265,7 +265,7 @@
             </div>
             <div class="form-group">
                 <label for="caseDetails">Case Details:</label>
-                <textarea id="caseDetails" rows="4" placeholder="Provide details about the case"></textarea>
+                <textarea id="caseDetails" name="caseDetails" rows="4" placeholder="Provide details about the case"></textarea>
             </div>
             <div class="form-group">
                 <label for="evidence">Upload Evidence (optional)</label>
@@ -275,40 +275,41 @@
         </form>
     </div>
 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-    // Function to handle form submission
-    async function submitReport(event) {
-        event.preventDefault(); // Prevent the default form submission
+    $(document).ready(function() {
+        $('#reportForm').submit(function(event) {
+            event.preventDefault(); // Prevent the default form submission
 
-        const formData = new FormData();
-        
-        
-        
-        formData.append('caseTitle', document.getElementById('caseTitle').value);
-        formData.append('caseType', document.getElementById('caseType').value);
-        formData.append('caseDetails', document.getElementById('caseDetails').value);
-        if (document.getElementById('evidence').files[0]) {
-            formData.append('evidence', document.getElementById('evidence').files[0]);
-        }
+            var formData = new FormData(this); // Create FormData object from the form
 
-        try {
-            const response = await fetch('../actions/report_case.php', {
-                method: 'POST',
-                body: formData
+
+            
+            $.ajax({
+                type: "POST",
+                url: "../actions/report_case.php",
+                data: formData,
+                processData: false, // Important: Tell jQuery not to process the data
+                contentType: false, // Important: Tell jQuery not to set content type
+                dataType: "json",
+                success: function(response) {
+
+                    console.log(response);
+                    if (response.success) {
+                        alert('Report submitted successfully!');
+                        $('#reportForm')[0].reset(); // Reset the form
+                    } else {
+                        // Handle errors
+                        alert('Error submitting report. Please try again.');
+                    }
+                },
+                error: function() {
+                    alert('Error submitting report. Please try again.');
+                }
             });
-
-            if (response.ok) {
-                const result = await response.json();
-                alert('Report submitted successfully!');
-                document.getElementById('reportForm').reset();
-            } else {
-                alert('Error submitting report. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error submitting report. Please try again.');
-        }
-    }
+        });
+    });
 </script>
 
 

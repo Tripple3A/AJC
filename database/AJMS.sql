@@ -110,8 +110,5 @@ INSERT INTO `CaseType` (`case_type_description`) VALUES
 ('Theft'), 
 ('Other');
 
--- Modify Cases table to reference CaseType
-ALTER TABLE `Cases`
-  ADD `case_type_id` INT NOT NULL,
-  ADD FOREIGN KEY (`case_type_id`) REFERENCES `CaseType`(`case_type_id`);
+
 
