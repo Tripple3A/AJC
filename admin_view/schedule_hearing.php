@@ -15,7 +15,7 @@ include '../settings/core.php';
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            background: url('/images/ashesiuni.jpeg') no-repeat center center fixed;
+            /*background: url('/images/ashesiuni.jpeg') no-repeat center center fixed;*/
             background-size: cover;
             color: #333;
             display: flex;
@@ -222,6 +222,13 @@ include '../settings/core.php';
             <li>
                 <a href="../admin_view/schedule_hearing.php">
                     <i class='bx bxs-briefcase'></i>
+                <span>Schedule Hearings</span>
+            </a>
+        </li>
+
+        <li>
+                <a href="../admin_view/hearings.php">
+                    <i class='bx bxs-briefcase'></i>
                 <span>Hearings</span>
             </a>
         </li>
@@ -248,42 +255,27 @@ include '../settings/core.php';
         <div id="clock"></div>
         
         <form id="meetingForm">
-            <input type="text" id="meetingTitle" placeholder="Meeting Title" required>
+            <input type="text" id="meetingTitle" name="meetingTitle" placeholder="Meeting Title" required>
             <div class="email-group" id="emailGroup">
                 <div>
-                    <input type="text" class="incharge" placeholder="Person in Charge" required>
+                    <input type="text" class="incharge" class="incharge" placeholder="Person in Charge" required>
                     <input type="email" class="inchargeEmail" placeholder="Person in Charge Email" required>
                     <button type="button" onclick="removeEmailField(this)">-</button>
                 </div>
             </div>
             <button type="button" onclick="addEmailField()">Add Person in Charge</button>
-            <input type="text" id="studentName" placeholder="Name of Student" required>
-            <input type="email" id="studentEmail" placeholder="Student Email" required>
-            <input type="text" id="roomNumber" placeholder="Conference Room Number" required>
-            <input type="date" id="meetingDate" placeholder="Date" required>
-            <input type="time" id="meetingTime" placeholder="Time" required>
+            <input type="text" name="studentName" id="studentName" placeholder="Name of Student" required>
+            <input type="email" name="studentEmail" id="studentEmail" placeholder="Student Email" required>
+            <input type="text" name="roomNumber" id="roomNumber" placeholder="Conference Room Number" required>
+            <input type="date" name="meetingDate" id="meetingDate" placeholder="Date" required>
+            <input type="time" name="meetingTime" id="meetingTime" placeholder="Time" required>
             <button type="submit">Add Meeting</button>
         </form>
 
-        <table id="meetingTable">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Person in Charge</th>
-                    <th>Person in Charge Email</th>
-                    <th>Student Name</th>
-                    <th>Student Email</th>
-                    <th>Conference Room Number</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Meetings will be added here -->
-            </tbody>
-        </table>
+       
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         // Update the clock
         function updateClock() {
@@ -329,44 +321,48 @@ include '../settings/core.php';
         }
 
         document.getElementById('meetingForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form values
-            var title = document.getElementById('meetingTitle').value;
-            var studentName = document.getElementById('studentName').value;
-            var studentEmail = document.getElementById('studentEmail').value;
-            var roomNumber = document.getElementById('roomNumber').value;
-            var date = document.getElementById('meetingDate').value;
-            var time = document.getElementById('meetingTime').value;
+            e.preventDefault(); // Prevent the default form submission
+            var formData = new FormData(this);
 
-            // Get all persons in charge and their emails
-            var inchargeNames = Array.from(document.getElementsByClassName('incharge')).map(input => input.value);
-            var inchargeEmails = Array.from(document.getElementsByClassName('inchargeEmail')).map(input => input.value);
+var inchargeNames = Array.from(document.getElementsByClassName('incharge')).map(input => input.value);
+var inchargeEmails = Array.from(document.getElementsByClassName('inchargeEmail')).map(input => input.value);
 
-            // Create a new row and cells
-            var table = document.getElementById('meetingTable').getElementsByTagName('tbody')[0];
-            var newRow = table.insertRow();
-            var cell1 = newRow.insertCell(0);
-            var cell2 = newRow.insertCell(1);
-            var cell3 = newRow.insertCell(2);
-            var cell4 = newRow.insertCell(3);
-            var cell5 = newRow.insertCell(4);
-            var cell6 = newRow.insertCell(5);
-            var cell7 = newRow.insertCell(6);
-            var cell8 = newRow.insertCell(7);
+formData.append('inchargeNames', JSON.stringify(inchargeNames));
+formData.append('inchargeEmails', JSON.stringify(inchargeEmails));
 
-            // Add values to cells
-            cell1.innerHTML = title;
-            cell2.innerHTML = inchargeNames.join(', ');
-            cell3.innerHTML = inchargeEmails.join(', ');
-            cell4.innerHTML = studentName;
-            cell5.innerHTML = studentEmail;
-            cell6.innerHTML = roomNumber;
-            cell7.innerHTML = date;
-            cell8.innerHTML = time;
+// Print form data to the console
+formData.forEach((value, key) => {
+    console.log(`${key}: ${value}`);
+});
 
-            // Clear form
+fetch('../actions/schedule_hearing_action.php', {
+    method: 'POST',
+    body: formData
+})
+.then(response => response.text()) // Get response as text
+.then(text => {
+    console.log('Response Text:', text); // Log the raw response text
+        try {
+        const data = JSON.parse(text); // Attempt to parse JSON
+        if (data.status === 'success') {
+            alert(data.message);
+            // Optionally, clear the form or update the UI
+           
             document.getElementById('meetingForm').reset();
+        } else {
+            alert(data.message);
+        }
+    } catch (error) {
+        console.error('Failed to parse JSON:', error);
+        alert('An error occurred while processing the response.');
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred while scheduling the hearing.');
+});
+            
+           
         });
     </script>
     <!-- Include EmailJS SDK -->

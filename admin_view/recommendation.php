@@ -189,6 +189,14 @@ include '../settings/core.php';
             <li>
                 <a href="../admin_view/schedule_hearing.php">
                     <i class='bx bxs-briefcase'></i>
+                <span>Schedule Hearings</span>
+            </a>
+        </li>
+
+
+        <li>
+                <a href="../admin_view/hearings.php">
+                    <i class='bx bxs-briefcase'></i>
                 <span>Hearings</span>
             </a>
         </li>

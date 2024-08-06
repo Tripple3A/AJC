@@ -144,6 +144,24 @@ include '../settings/core.php';
             background-color: #5a232d;
             color: #fff;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            /*table-layout: fixed; /* Ensure the table fits within the container */
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            word-wrap: break-word; /* Ensure long words break properly */
+        }
+        th {
+            background-color: #800020; /* Wine color */
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -200,91 +218,49 @@ include '../settings/core.php';
     <div class="main-content">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="welcome-msg">
-                <h2>Admin Cases Management</h2>
+                <h2>Scheduled hearings</h2>
             </div>
-            <button class="btn btn-wine" data-toggle="modal" data-target="#addCaseModal">Add Case</button>
+            
         </div>
 
         <div class="search-bar">
-            <input type="text" id="searchInput" class="form-control" placeholder="Search for cases...">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search for hearings...">
         </div>
 
-        <table class="table table-striped">
+        <table id="meetingTable">
             <thead>
                 <tr>
-                    <th scope="col">Case ID</th>
-                    <th scope="col">Case Description</th>
-                    <th scope="col">Date Reported</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
+                    <th>Title</th>
+                    <th>Person in Charge</th>
+                    <th>Person in Charge Email</th>
+                    <th>Student Name</th>
+                    <th>Student Email</th>
+                    <th>Conference Room Number</th>
+                    <th>Date</th>
+                    <th>Time</th>
                 </tr>
             </thead>
-            <tbody id="casesTable">
-        <?php
-        // Include the file to get all cases
-        include '../functions/get_all_cases.php';
-
-        // Include the file to get verdict statuses
-        include '../functions/get_all_verdict_status.php';
-
-        // Generate table rows from the cases array
-        foreach ($cases as $case) {
-            echo '<tr>';
-            echo '<td>' . htmlspecialchars($case['case_id']) . '</td>';
-            echo '<td>' . htmlspecialchars($case['case_description']) . '</td>';
-            echo '<td>' . htmlspecialchars($case['report_date']) . '</td>';
-            echo '<td>';
-            echo '<select class="form-control" onchange="updateStatus(this, ' . htmlspecialchars($case['case_id']) . ')">';
-            foreach ($roles as $role) {
-                $selected = $role['verdict_status_description'] === $case['status'] ? 'selected' : '';
-                echo '<option value="' . htmlspecialchars($role['verdict_status_description']) . '" ' . $selected . '>' . htmlspecialchars($role['verdict_status_description']) . '</option>';
-            }
-            echo '</select>';
-            echo '</td>';
-            echo '<td>';
-            echo '<button class="btn btn-warning btn-sm" onclick="editCase(this, ' . htmlspecialchars($case['case_id']) . ')">Edit</button>';
-            echo '<button class="btn btn-danger btn-sm" onclick="deleteCase(this, ' . htmlspecialchars($case['case_id']) . ')">Delete</button>';
-            echo '</td>';
-            echo '</tr>';
-        }
-        ?>
+            <tbody>
+            <?php 
+            include '../functions/get_all_hearings.php';
+            foreach ($hearings as $hearing): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($hearing['title']); ?></td>
+                <td><?php echo htmlspecialchars($hearing['person_in_charge']); ?></td>
+                <td><?php echo htmlspecialchars($hearing['person_in_charge_email']); ?></td>
+                <td><?php echo htmlspecialchars($hearing['student_name']); ?></td>
+                <td><?php echo htmlspecialchars($hearing['student_email']); ?></td>
+                <td><?php echo htmlspecialchars($hearing['conference_room_number']); ?></td>
+                <td><?php echo htmlspecialchars($hearing['date']); ?></td>
+                <td><?php echo htmlspecialchars($hearing['time']); ?></td>
+            </tr>
+            <?php endforeach; ?>
         </tbody>
         </table>
     </div>
 
     <!-- Add Case Modal -->
-    <div class="modal fade" id="addCaseModal" tabindex="-1" aria-labelledby="addCaseModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addCaseModalLabel">Add New Case</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="addCaseForm">
-                        <div class="form-group">
-                            <label for="caseDescription">Case Description</label>
-                            <input type="text" class="form-control" id="caseDescription" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="dateReported">Date Reported</label>
-                            <input type="date" class="form-control" id="dateReported" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="caseStatus">Status</label>
-                            <select class="form-control" id="caseStatus">
-                                <option value="Pending">Pending</option>
-                                <option value="Completed">Completed</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-wine">Add Case</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
    <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -298,7 +274,7 @@ include '../settings/core.php';
         // JavaScript for search functionality
         document.getElementById('searchInput').addEventListener('keyup', function() {
             var input = this.value.toLowerCase();
-            var rows = document.getElementById('casesTable').getElementsByTagName('tr');
+            var rows = document.getElementById('meetingTable').getElementsByTagName('tr');
             for (var i = 0; i < rows.length; i++) {
                 var cells = rows[i].getElementsByTagName('td');
                 var found = false;
@@ -351,42 +327,7 @@ include '../settings/core.php';
             });
         }
 
-        // Handle add case form submission
-        document.getElementById('addCaseForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            var description = document.getElementById('caseDescription').value;
-            var dateReported = document.getElementById('dateReported').value;
-            var status = document.getElementById('caseStatus').value;
-
-            // Add new case to the table
-            var newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td></td>
-                <td>${description}</td>
-                <td>${dateReported}</td>
-                <td>
-                    <select class="form-control" onchange="updateStatus(this)">
-                        <option value="Pending"${status === 'Pending' ? ' selected' : ''}>Pending</option>
-                        <option value="Completed"${status === 'Completed' ? ' selected' : ''}>Completed</option>
-                    </select>
-                </td>
-                <td>
-                    <button class="btn btn-warning btn-sm" onclick="editCase(this)">Edit</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteCase(this)">Delete</button>
-                </td>
-            `;
-            document.getElementById('casesTable').appendChild(newRow);
-
-            // Close the modal
-            $('#addCaseModal').modal('hide');
-
-            // Reset the form
-            this.reset();
-
-            // Update case IDs
-            updateCaseIds();
-        });
-
+        
         // Function to update case IDs
         function updateCaseIds() {
             var rows = document.getElementById('casesTable').getElementsByTagName('tr');
