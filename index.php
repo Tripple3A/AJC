@@ -66,12 +66,11 @@
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
-							<li class="active"><a href="index.html">Home</a></li>
+							<li class="active"><a href="view/student_home.php">Home</a></li>
 							
-							<li><a href="won.html">Cases</a></li>
+							<li><a href="view/student_cases.php">Cases</a></li>
 				
-							<li><a href="about.html">About</a></li>
-							<li><a href="contact.html">Contact</a></li>
+							
 							<li class="btn-cta"><a href="login/Login_view.php"><span>Login</span></a></li>
 							<li class="btn-cta"><a href="login/Register_view.php"><span>Sign Up</span></a></li>
 						</ul>
