@@ -114,6 +114,21 @@ CREATE TABLE `PersonsInCharge` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+-- Create the HearingStatus table
+CREATE TABLE `HearingStatus` (
+  `status_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `status_description` VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Insert some default hearing statuses into the HearingStatus table
+INSERT INTO `HearingStatus` (`status_description`) VALUES 
+('Scheduled'), 
+('In Progress'), 
+('Completed'), 
+('Canceled');
+
+
+
 -- Add CaseType table
 CREATE TABLE `CaseType` (
   `case_type_id` INT PRIMARY KEY AUTO_INCREMENT,

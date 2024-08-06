@@ -238,6 +238,7 @@ include '../settings/core.php';
                     <th>Conference Room Number</th>
                     <th>Date</th>
                     <th>Time</th>
+                    <th >Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -253,6 +254,11 @@ include '../settings/core.php';
                 <td><?php echo htmlspecialchars($hearing['conference_room_number']); ?></td>
                 <td><?php echo htmlspecialchars($hearing['date']); ?></td>
                 <td><?php echo htmlspecialchars($hearing['time']); ?></td>
+
+                <td>
+            <?php echo '<button class="btn btn-warning btn-sm" onclick="editCase(this, ' . htmlspecialchars($hearing['hearing_id']) . ')">Done</button>'; ?>
+            <?php echo '<button class="btn btn-danger btn-sm" onclick="deleteCase(this, ' . htmlspecialchars($hearing['hearing_id']) . ')">Delete</button>'; ?>
+        </td>
             </tr>
             <?php endforeach; ?>
         </tbody>

@@ -5,6 +5,7 @@ include '../settings/connection.php';
 // Define the query to join Hearings and PersonsInCharge tables
 $query = "
     SELECT 
+        h.hearing_id AS hearing_id,
         h.meeting_title AS title,
         p.name AS person_in_charge,
         p.email AS person_in_charge_email,
