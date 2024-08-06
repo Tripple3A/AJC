@@ -92,6 +92,27 @@ CREATE TABLE `Verdict` (
   FOREIGN KEY (`case_id`) REFERENCES `Cases`(`case_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- Create the Hearings table
+CREATE TABLE `Hearings` (
+  `hearing_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `meeting_title` VARCHAR(255) NOT NULL,
+  `student_name` VARCHAR(255) NOT NULL,
+  `student_email` VARCHAR(255) NOT NULL,
+  `room_number` VARCHAR(50) NOT NULL,
+  `meeting_date` DATE NOT NULL,
+  `meeting_time` TIME NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- Create a table for the persons in charge
+CREATE TABLE `PersonsInCharge` (
+  `person_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `hearing_id` INT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  FOREIGN KEY (`hearing_id`) REFERENCES `Hearings`(`hearing_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- Add CaseType table
 CREATE TABLE `CaseType` (
