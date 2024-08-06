@@ -92,26 +92,6 @@ CREATE TABLE `Verdict` (
   FOREIGN KEY (`case_id`) REFERENCES `Cases`(`case_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Create the Hearings table
-CREATE TABLE `Hearings` (
-  `hearing_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `meeting_title` VARCHAR(255) NOT NULL,
-  `student_name` VARCHAR(255) NOT NULL,
-  `student_email` VARCHAR(255) NOT NULL,
-  `room_number` VARCHAR(50) NOT NULL,
-  `meeting_date` DATE NOT NULL,
-  `meeting_time` TIME NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
--- Create a table for the persons in charge
-CREATE TABLE `PersonsInCharge` (
-  `person_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `hearing_id` INT NOT NULL,
-  `name` VARCHAR(255) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  FOREIGN KEY (`hearing_id`) REFERENCES `Hearings`(`hearing_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 -- Create the HearingStatus table
@@ -126,6 +106,34 @@ INSERT INTO `HearingStatus` (`status_description`) VALUES
 ('In Progress'), 
 ('Completed'), 
 ('Canceled');
+
+-- Create the Hearings table with corrected foreign key reference
+CREATE TABLE `Hearings` (
+  `hearing_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `meeting_title` VARCHAR(255) NOT NULL,
+  `student_name` VARCHAR(255) NOT NULL,
+  `student_email` VARCHAR(255) NOT NULL,
+  `room_number` VARCHAR(50) NOT NULL,
+  `meeting_date` DATE NOT NULL,
+  `meeting_time` TIME NOT NULL,
+  `hearing_status_id` INT NOT NULL DEFAULT 1,
+  FOREIGN KEY (`hearing_status_id`) REFERENCES `HearingStatus`(`status_id`) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+-- Create a table for the persons in charge
+CREATE TABLE `PersonsInCharge` (
+  `person_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `hearing_id` INT NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  FOREIGN KEY (`hearing_id`) REFERENCES `Hearings`(`hearing_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+
 
 
 
@@ -145,6 +153,9 @@ INSERT INTO `CaseType` (`case_type_description`) VALUES
 ('Vandalism'), 
 ('Theft'), 
 ('Other');
+
+
+
 
 
 

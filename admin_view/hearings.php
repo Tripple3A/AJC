@@ -238,12 +238,13 @@ include '../settings/core.php';
                     <th>Conference Room Number</th>
                     <th>Date</th>
                     <th>Time</th>
-                    <th >Actions</th>
+                    <th >Status</th>
                 </tr>
             </thead>
             <tbody>
             <?php 
             include '../functions/get_all_hearings.php';
+            include '../functions/get_hearing_status.php';
             foreach ($hearings as $hearing): ?>
             <tr>
                 <td><?php echo htmlspecialchars($hearing['title']); ?></td>
@@ -254,11 +255,18 @@ include '../settings/core.php';
                 <td><?php echo htmlspecialchars($hearing['conference_room_number']); ?></td>
                 <td><?php echo htmlspecialchars($hearing['date']); ?></td>
                 <td><?php echo htmlspecialchars($hearing['time']); ?></td>
-
                 <td>
-            <?php echo '<button class="btn btn-warning btn-sm" onclick="editCase(this, ' . htmlspecialchars($hearing['hearing_id']) . ')">Done</button>'; ?>
-            <?php echo '<button class="btn btn-danger btn-sm" onclick="deleteCase(this, ' . htmlspecialchars($hearing['hearing_id']) . ')">Delete</button>'; ?>
-        </td>
+    <select class="form-control" onchange="updateStatus(this, <?php echo htmlspecialchars($hearing['hearing_id']); ?>)">
+        <?php foreach ($roles as $role): ?>
+            <option value="<?php echo htmlspecialchars($role['status_description']); ?>"
+                <?php echo $role['status_description'] ? 'selected' : ''; ?>>
+                <?php echo htmlspecialchars($role['status_description']); ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</td>
+
+               
             </tr>
             <?php endforeach; ?>
         </tbody>
@@ -295,52 +303,29 @@ include '../settings/core.php';
         });
 
        // JavaScript functions to handle case actions
-       function updateStatus(selectElement, caseId) {
+       function updateStatus(selectElement, hearingId) {
             var status = selectElement.value;
             $.ajax({
-                url: '../actions/update_cases.php',
+                url: '../actions/update_hearing_status.php',
                 type: 'POST',
                 data: {
                     action: 'update_status',
-                    case_id: caseId,
+                    hearing_id: hearingId,
                     status: status
                 },
                 success: function(response) {
-                    alert('Case status updated successfully');
+                    alert('Hearing status updated successfully');
                 },
                 error: function(xhr, status, error) {
-                    alert('An error occurred while updating the case status');
-                }
-            });
-        }
-
-        function deleteCase(button, caseId) {
-            var row = button.parentElement.parentElement;
-            $.ajax({
-                url: '../actions/update_cases.php',
-                type: 'POST',
-                data: {
-                    action: 'delete_case',
-                    case_id: caseId
-                },
-                success: function(response) {
-                    row.remove();
-                    alert('Case deleted successfully');
-                },
-                error: function(xhr, status, error) {
-                    alert('An error occurred while deleting the case');
+                    alert('An error occurred while updating the hearing status');
                 }
             });
         }
 
         
-        // Function to update case IDs
-        function updateCaseIds() {
-            var rows = document.getElementById('casesTable').getElementsByTagName('tr');
-            for (var i = 0; i < rows.length; i++) {
-                rows[i].cells[0].innerText = i + 1;
-            }
-        }
+
+        
+        
     </script>
 </body>
 </html>
