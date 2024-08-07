@@ -1,12 +1,10 @@
 <?php
-
+//starting a session
+session_start();
 //including the connection file
 include '../settings/connection.php';
 
 //initializing variable error for capturing errors
-//initializing variables
-$email="";
-$password= "";
 $errors = array();
 
 if(isset($_POST['login'])){   
@@ -14,10 +12,7 @@ if(isset($_POST['login'])){
     $email = mysqli_real_escape_string($connection, $_POST['email']);
     $password = mysqli_real_escape_string($connection, $_POST['psw']);
 
-    //form validation
-    //adds corresponding error into errors array
-    if(empty($email)){array_push($errors, "Email is required");}
-    if(empty($password)){array_push($errors, "Password is required");}
+
 
     //if no errors are found
     //Query to check if the user exists
@@ -47,22 +42,19 @@ if(isset($_POST['login'])){
             $user_row = mysqli_fetch_assoc($user_id_result);
             $user_id_value = $user_row['user_id'];
 
-
             $rid_query = "SELECT role_id FROM Users WHERE email= '$email'";
             $rid_result = mysqli_query($connection,$rid_query);
             $rid_row = mysqli_fetch_assoc($rid_result);
             $rid_value = $rid_row['role_id'];
-            
+           
             $_SESSION['user_id'] = $user_id_value;
             $_SESSION['role_id'] = $rid_value;
 
             //Redirecting admins to admin pages and regular users to homepage
             //Admins with fid, 1, 2
-
             if($rid_value == 1){ 
                 header("Location:../view/student_home.php");
                 die();
-
             }
             else if($rid_value == 2){  
                 header("Location:../admin_view/home_admin.php");
