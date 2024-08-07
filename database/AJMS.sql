@@ -58,6 +58,14 @@ CREATE TABLE `Reports` (
 -- --------------------------------------------------------
 -- Table structure for table `VerdictStatus`
 --
+CREATE TABLE Events (
+    event_id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    event_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 CREATE TABLE `VerdictStatus` (
   `verdict_status_id` INT PRIMARY KEY AUTO_INCREMENT,
