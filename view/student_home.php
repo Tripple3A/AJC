@@ -205,6 +205,10 @@ include '../settings/core.php';
                     <div class="card-body">
                         <h5 class="card-title">School Policies</h5>
                         <p class="card-text">Information about school policies goes here.</p>
+                        <ul id="policyList" class="list-group list-group-flush">
+                            <!-- Policies will be dynamically loaded here -->
+                        </ul>
+                        <a href="https://www.ashesi.edu.gh/judicial-council-records/" class="btn btn-wine mt-3">More</a>
                     </div>
                 </div>
             </div>
@@ -283,7 +287,40 @@ include '../settings/core.php';
     }
 
     // Update quote every 30 seconds
-    setInterval(updateQuote, 7000);
+    setInterval(updateQuote, 30000);
+
+    $(document).ready(function () {
+        // Fetch policies from the server
+        $.ajax({
+            url: '../actions/fetch_policies.php',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                var policyList = $('#policyList');
+                policyList.empty(); // Clear any existing items
+                data.forEach(function (policy) {
+                    var policyItem = `
+                        <li class="list-group-item">
+                            <h6>${policy.title}</h6>
+                            <p>${policy.description}</p>
+                        </li>
+                    `;
+                    policyList.append(policyItem);
+                });
+            },
+            error: function (error) {
+                console.log('Error fetching policies:', error);
+            }
+        });
+
+        // Search functionality
+        $('#searchInput').on('keyup', function () {
+            var input = $(this).val().toLowerCase();
+            $('#policyList li').filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(input) > -1);
+            });
+        });
+    });
 </script>
 </body>
 </html>
