@@ -34,8 +34,9 @@ CREATE TABLE `Users` (
 
 CREATE TABLE `Policy` (
   `policy_id` INT PRIMARY KEY AUTO_INCREMENT,
-  `description` TEXT NOT NULL,
+  `policy_description` TEXT NOT NULL,
   `last_update` DATE NOT NULL,
+  `policy_title` VARCHAR(255) NOT NULL,
   `user_id` INT NOT NULL,
   FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

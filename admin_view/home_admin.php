@@ -12,7 +12,7 @@ include '../settings/core.php';
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="chore icon.png">
-    <title>Chore Management System - Admin</title>
+    <title>AJMS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
@@ -312,11 +312,11 @@ include '../settings/core.php';
                         <form id="addPolicyForm">
                             <div class="form-group">
                                 <label for="policyTitle">Policy Title</label>
-                                <input type="text" class="form-control" id="policyTitle" required>
+                                <input type="text" class="form-control" name="policyTitle" id="policyTitle" required>
                             </div>
                             <div class="form-group">
                                 <label for="policyDescription">Policy Description</label>
-                                <textarea class="form-control" id="policyDescription" rows="3" required></textarea>
+                                <textarea class="form-control" name="policyDescription" id="policyDescription" rows="3" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-wine">Add Policy</button>
                         </form>
@@ -328,10 +328,59 @@ include '../settings/core.php';
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!--Ajax for validation-->
+   
     <script>
+        document.getElementById('addPolicyForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var formElement = this;
+        var formData = new FormData(formElement); // Use FormData API to capture the form data
+
+        // Convert FormData to an object for logging
+        var formObject = {};
+        formData.forEach(function(value, key) {
+            formObject[key] = value;
+        });
+
+        // Log the form data to the console
+        console.log('Form Data:', formObject);
+
+        // Log each key-value pair in the FormData
+        formData.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
+                
+                $.ajax({
+            type: "POST",
+            url: "../actions/add_policy.php",
+            data: formData,
+            processData: false, // Prevent jQuery from automatically transforming the data into a query string
+        contentType: false, // Prevent jQuery from overriding the content type
+            dataType: "json",
+            success: function(response) {
+                // Log the response to the console
+                console.log('Server Response:', response);
+
+                if (response.success) {           
+                    $('#addPolicyModal').modal('hide');
+                    alert(response.success);
+                } else {
+                    $('#addPolicyModal').modal('hide');
+                    alert('An error occurred while adding policy');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Log error details to the console
+                console.log('AJAX Error:', textStatus, errorThrown);
+            }
+});
+
+            });
         // Mock data for policies
         const policies = [
             { id: 1, title: 'Attendance Policy', description: 'Policy regarding student attendance.' },
@@ -402,21 +451,7 @@ include '../settings/core.php';
             }
         }
 
-        document.getElementById('addPolicyForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const title = document.getElementById('policyTitle').value;
-            const description = document.getElementById('policyDescription').value;
-
-            // Add new policy to the list
-            const newPolicy = {
-                id: policies.length + 1,
-                title: title,
-                description: description
-            };
-            policies.push(newPolicy);
-            renderPolicies();
-            $('#addPolicyModal').modal('hide');
-        });
+        
 
         // Function to generate report
         function generateReport() {
