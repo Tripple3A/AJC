@@ -25,12 +25,11 @@ h3 {
     left: 0; /* Position at the top right corner */
 }
 
-
 .container{
     width: 850px;
     background: #fff; 
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgb(146, 61, 65);
     color: black;
     
 }
@@ -51,7 +50,6 @@ h3 {
    color: rgba(113,99,186,255);
    font-family: "Poppins", sans-serif;
 }
-
 
 
 .container .input-box{
@@ -141,8 +139,6 @@ h3 {
 
 }
 
-
-
 .container .Login{
     font-size:14.5px;
     text-align:center;
@@ -152,18 +148,8 @@ h3 {
 .container .Login p a {
     color:rgba(113,99,186,255);
     text-decoration: none;
-    font-weight: 600;
 }
 
 .container .Login p a {
     text-decoration: underline;
 }
-
-
-
-
-
-
-
-
-
