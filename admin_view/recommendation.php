@@ -1,21 +1,15 @@
-<?php
-
-include '../settings/core.php';
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AJMS</title>
+    <title>AJMS - Integrated Chatbot Verdict System</title>
     <style>
-        body {
+        /* ... (previous styles remain the same) ... */
+          body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             margin: 0;
-            background: url('/images/ashesiuni.jpeg') ;
+           /* background: url('/images/ashesiuni.jpeg') ;*/
             background-size: cover;
             color: #333;
             display: flex;
@@ -39,7 +33,6 @@ include '../settings/core.php';
     transition: all 0.5s linear;
     background: #800020;
 }
-
 
 
 .sidebar:hover{
@@ -70,7 +63,6 @@ include '../settings/core.php';
     padding:0;
 }
 
-
 .menu li{
     padding:1rem;
     margin:8px 0;
@@ -85,7 +77,6 @@ include '../settings/core.php';
 
     
 }
-
 
 .menu a {
     color:#fff;
@@ -107,8 +98,7 @@ include '../settings/core.php';
     font-size:1.2rem;
 }
 
-
-        .container {
+.container {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 25px;
             border-radius: 8px;
@@ -133,6 +123,7 @@ include '../settings/core.php';
             margin-bottom: 5px;
             font-weight: bold;
         }
+
         .form-group select, .form-group input, .form-group textarea {
             width: 100%;
             padding: 10px;
@@ -163,11 +154,44 @@ include '../settings/core.php';
         .verdict-item:last-child {
             border-bottom: none;
         }
+
+
+
+        .chatbot-container {
+            margin-top: 20px;
+            width: 100%;
+            height: 500px; /* Adjust the height as needed */
+            max-height: 70vh; /* Ensure it fits within the viewport */
+            overflow: auto; /* Allow scrolling within the container */
+        }
+
+        .chatbot-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none; /* Remove the border */
+        }
+
+        .chatbot-input {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .chatbot-response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+
+        #loading {
+            display: none;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-
-<div class="sidebar">
+    <!-- ... (sidebar code remains the same) ... -->
+    <div class="sidebar">
 <div class="logo">
         <img src="../images/ASHLOGO.jpeg" >
     </div>
@@ -187,7 +211,7 @@ include '../settings/core.php';
                 </a>
             </li>
             <li>
-                <a href="../admin_view/schedule_hearing.php">
+            <a href="../admin_view/schedule_hearing.php">
                     <i class='bx bxs-briefcase'></i>
                 <span>Schedule Hearings</span>
             </a>
@@ -218,88 +242,45 @@ include '../settings/core.php';
 </div>
 
 
-
     <div class="container">
         <h1>Case Verdict Recommendation System</h1>
-        <div class="form-group">
-            <label for="caseType">Select Case Type:</label>
-            <select id="caseType">
-                <option value="criminal">Criminal</option>
-                <option value="civil">Civil</option>
-                <option value="family">Family</option>
-                <option value="property">Property</option>
-            </select>
+        
+        <div class="chatbot-container">
+            <iframe
+                id="chatbotFrame"
+                src="https://www.chatbase.co/chatbot-iframe/hK6YRJwYHvFKGzxrUa2v4"
+            ></iframe>
         </div>
-        <div class="form-group">
-            <label for="caseSeverity">Select Case Severity:</label>
-            <select id="caseSeverity">
-                <option value="minor">Minor</option>
-                <option value="moderate">Moderate</option>
-                <option value="major">Major</option>
-                <option value="critical">Critical</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="caseDetails">Case Details:</label>
-            <textarea id="caseDetails" rows="4" placeholder="Provide details about the case"></textarea>
-        </div>
-        <button onclick="getVerdictions()">Get Verdict Recommendations</button>
-        <div id="verdicts" class="verdicts">
-            <!-- Verdicts will be displayed here -->
-        </div>
+        <div class="chatbot-response" id="chatbotResponse"></div>
     </div>
 
     <script>
-        const verdictsData = {
-            criminal: [
-                { severity: "minor", verdict: "Probation" },
-                { severity: "moderate", verdict: "Community Service" },
-                { severity: "major", verdict: "Imprisonment" },
-                { severity: "critical", verdict: "Extended Imprisonment" }
-            ],
-            civil: [
-                { severity: "minor", verdict: "Monetary Compensation" },
-                { severity: "moderate", verdict: "Injunction" },
-                { severity: "major", verdict: "Contract Revision" },
-                { severity: "critical", verdict: "Settlement Agreement" }
-            ],
-            family: [
-                { severity: "minor", verdict: "Custody Arrangement" },
-                { severity: "moderate", verdict: "Child Support" },
-                { severity: "major", verdict: "Alimony" },
-                { severity: "critical", verdict: "Permanent Custody" }
-            ],
-            property: [
-                { severity: "minor", verdict: "Property Repair Order" },
-                { severity: "moderate", verdict: "Property Value Adjustment" },
-                { severity: "major", verdict: "Eviction" },
-                { severity: "critical", verdict: "Property Transfer" }
-            ]
+        const debounce = (func, wait) => {
+            let timeout;
+            return (...args) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
         };
 
-        function getVerdictions() {
-            const caseType = document.getElementById('caseType').value;
-            const caseSeverity = document.getElementById('caseSeverity').value;
+        const sendToChatbot = debounce(() => {
             const caseDetails = document.getElementById('caseDetails').value;
-            const verdictsDiv = document.getElementById('verdicts');
+            const message = `Case Details: ${caseDetails}\n\nPlease provide a detailed analysis and verdict prediction for this case.`;
+            const chatbotFrame = document.getElementById('chatbotFrame');
+            chatbotFrame.contentWindow.postMessage({ type: 'chat-message', message: message }, '*');
+        }, 1000);
 
-            // Filter verdicts based on the selected case type and severity
-            let items = verdictsData[caseType] || [];
-            let verdict = items.find(item => item.severity === caseSeverity);
+        document.getElementById('caseDetails').addEventListener('input', sendToChatbot);
 
-            // Generate HTML for verdicts
-            const verdictHtml = verdict 
-                ? `<div class="verdict-item">
-                    <strong>Case Type:</strong> ${caseType}<br>
-                    <strong>Severity:</strong> ${caseSeverity}<br>
-                    <strong>Recommended Verdict:</strong> ${verdict.verdict}<br>
-                    <strong>Case Details:</strong> ${caseDetails}
-                </div>`
-                : 'No verdict recommendations available for the selected case type and severity.';
-
-            verdictsDiv.innerHTML = verdictHtml;
-        }
+        window.addEventListener('message', (event) => {
+            if (event.origin === 'https://www.chatbase.co') {
+                const data = event.data;
+                if (data.type === 'chat-response') {
+                    const chatbotResponse = document.getElementById('chatbotResponse');
+                    chatbotResponse.innerHTML = data.message;
+                }
+            }
+        });
     </script>
-
 </body>
 </html>
