@@ -2,9 +2,6 @@
 
 include '../settings/core.php';
 ?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -262,6 +259,27 @@ include '../settings/core.php';
                                 <h5 class="mb-0">Policy List</h5>
                             </div>
                             <ul class="list-group list-group-flush" id="policyList">
+                            <?php
+                                include "../actions/fetch_policies.php";
+                                $policyList = getPolicies();
+                                foreach ($policyList as $policy) {
+                                    echo"
+                                        <li class='list-group-item d-flex justify-content-between align-items-center'>
+                                            <div>
+                                                <h5>{$policy['policy_title']}</h5>
+                                                <p>{$policy['policy_description']}</p>
+                                           
+                                                <button class='btn btn-wine btn-sm btn-icon' onclick='updatePolicy({$policy['policy_id']})'>
+                                                    <i class='bx bx-edit'></i> Update
+                                                </button>
+                                                <button class='btn btn-danger btn-sm btn-icon ml-2' onclick='deletePolicy({$policy['policy_id']})'>
+                                                    <i class='bx bx-trash'></i> Delete
+                                                </button>
+                                            </div>
+                                        </li>";
+                                    }
+                            ?>
+
                                 <!-- Policy list items will be dynamically loaded here -->
                             </ul>
                         </div>
@@ -355,17 +373,16 @@ include '../settings/core.php';
             console.log(`${key}: ${value}`);
         });
                 
-                $.ajax({
+            $.ajax({
             type: "POST",
             url: "../actions/add_policy.php",
             data: formData,
             processData: false, // Prevent jQuery from automatically transforming the data into a query string
-        contentType: false, // Prevent jQuery from overriding the content type
+            contentType: false, // Prevent jQuery from overriding the content type
             dataType: "json",
             success: function(response) {
                 // Log the response to the console
                 console.log('Server Response:', response);
-
                 if (response.success) {           
                     $('#addPolicyModal').modal('hide');
                     alert(response.success);
@@ -381,49 +398,6 @@ include '../settings/core.php';
 });
 
             });
-        // Mock data for policies
-        const policies = [
-            { id: 1, title: 'Attendance Policy', description: 'Policy regarding student attendance.' },
-            { id: 2, title: 'Disciplinary Actions', description: 'Policy for handling student discipline.' },
-            { id: 3, title: 'Academic Integrity', description: 'Policy on academic honesty and integrity.' }
-        ];
-
-        // Mock data for cases
-        const cases = [
-            { id: 1, category: 'Sexual', reportedTime: '2023-01-15', resolvedTime: '2023-01-20' },
-            { id: 2, category: 'Harassment', reportedTime: '2023-02-12', resolvedTime: '2023-02-15' },
-            { id: 3, category: 'Bullying', reportedTime: '2023-03-05', resolvedTime: null },
-            // Add more cases as needed
-        ];
-
-        // Render policies
-        function renderPolicies() {
-            const policyList = document.getElementById('policyList');
-            policyList.innerHTML = '';
-            policies.forEach(policy => {
-                const policyItem = `
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <div>
-                            <h5>${policy.title}</h5>
-                            <p>${policy.description}</p>
-                        </div>
-                        <div>
-                            <button class="btn btn-wine btn-sm btn-icon" onclick="updatePolicy(${policy.id})">
-                                <i class='bx bx-edit'></i> Update
-                            </button>
-                            <button class="btn btn-danger btn-sm btn-icon ml-2" onclick="deletePolicy(${policy.id})">
-                                <i class='bx bx-trash'></i> Delete
-                            </button>
-                        </div>
-                    </li>
-                `;
-                policyList.innerHTML += policyItem;
-            });
-        }
-
-        // Call renderPolicies initially
-        renderPolicies();
-
         // Search functionality
         document.getElementById('searchInput').addEventListener('keyup', function() {
             var input = this.value.toLowerCase();
@@ -545,3 +519,4 @@ include '../settings/core.php';
     </script>
 </body>
 </html>
+
