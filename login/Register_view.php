@@ -92,11 +92,11 @@ function validation() {
                     <div class="input-box">
                        <div class="input-field">
                         <label for="firstname"style="color: rgb(146, 61, 65);">Firstname</label>
-                    <input style="background-color: rgb(146, 61, 65);" name="firstname" type="text"  required id="firstname" style="color: rgb(146, 61, 65);">
+                    <input style = "color:rgb(146, 61, 65);border-color: rgb(146, 61, 65); background-color: white;" name="firstname" type="text"  required id="firstname" style="color: rgb(146, 61, 65);">
                     </div>
                     <div class="input-field">
                         <label for="lastname" style="color: rgb(146, 61, 65);">Lastname</label>
-                    <input style="background-color: rgb(146, 61, 65);" name="lastname" type="text"  required id="lastname">
+                    <input style="color:rgb(146, 61, 65); border-color: rgb(146, 61, 65); background-color: white;" name="lastname" type="text"  required id="lastname">
                     </div>
                     </div>
 
@@ -132,7 +132,7 @@ function validation() {
 
                     <div class="input-field">
                         <label for="email" style="color: rgb(146, 61, 65);">Email:</label>
-                        <input style="background-color: rgb(146, 61, 65);" name="email" type="text"  required id="email">
+                        <input style="border-color: rgb(146, 61, 65); background-color: white; color:rgb(146, 61, 65);" name="email" type="text"  required id="email">
                         </div>
 
                     </div>
@@ -141,13 +141,13 @@ function validation() {
                     <div class = "input-box">
                     <div class="input-field">
                         <label for="psw" style="color: rgb(146, 61, 65);">Password</label>                    
-                        <input style="background-color: rgb(146, 61, 65);" name = "psw" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
+                        <input style="border-color: rgb(146, 61, 65);color:rgb(146, 61, 65); background-color: white;" name = "psw" type="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
                  id="psw">
                     </div>
 
                     <div class="input-field">
                     <label for="psw2" style="color: rgb(146, 61, 65);" >Confirm Password</label>
-                    <input style="background-color: rgb(146, 61, 65);" type="password" name="psw2" 
+                    <input style="border-color: rgb(146, 61, 65);color:rgb(146, 61, 65); background-color: white;" type="password" name="psw2" 
                     id="psw2" required>
                     </div>
                     </div>
@@ -157,8 +157,9 @@ function validation() {
                     information is true and correct</label>
 
                         <div>
-                    <button name="register" type="submit" id="#register"style="color: rgb(146, 61, 65);">Register</button>
-                        </div>
+                    <button name="register" type="submit" id="#register"style="background-color: rgb(146, 61, 65); border-color: rgb(146, 61, 65); color:white;padding: 12px;border-radius: 10%; text-align: center; display: inline;">Register</button>
+        
+                </div>
 
                     <div class="Login">
                         <p>You can now <a href="../login/Login_view.php"style="color: rgb(146, 61, 65);">Log in</a></p>
