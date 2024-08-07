@@ -66,6 +66,7 @@ if(isset($_POST['login'])){
             // Passwords do not match
             array_push($errors, "Incorrect password. Please try again.");
             header("Location:../login/Login_view.php?error=Incorrect Password");
+            die();
             }  
 
         }
