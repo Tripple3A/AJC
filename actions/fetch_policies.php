@@ -1,20 +1,14 @@
 <?php
-include '../settings/connection.php'; // Include the database connection
 
 // Fetch policies from the database
-$query = "SELECT id, title, description FROM policies"; // Update this to match your actual table and columns
-$result = mysqli_query($connection, $query);
+function getPolicies(){
+    include '../settings/connection.php'; // Include the database connection
+    $query = "SELECT policy_id, policy_title, policy_description FROM policy"; // Update this to match your actual table and columns
+    $result = mysqli_query($connection, $query);
+    $policies = [];
 
-$policies = [];
-
-while ($row = mysqli_fetch_assoc($result)) {
-    $policies[] = $row;
+    while ($row = mysqli_fetch_assoc($result)) {
+        $policies[] = $row;
+    }
+    return $policies;
 }
-
-// Return policies as JSON
-header('Content-Type: application/json');
-echo json_encode($policies);
-
-// Close the database connection
-mysqli_close($connection);
-?>
