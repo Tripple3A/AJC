@@ -4,7 +4,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
-
 }
 
 /* Body styling */
@@ -14,8 +13,7 @@ body {
     justify-content: center;
     height: 100vh;
     margin: 0;
-    background-color: rgb(146, 61, 65); /* Background color */
-    /*color: rgb(146, 61, 65); /* Text color */
+    background-color: white; /* Background color */
 }
 
 /* Wrapper styling */
@@ -46,7 +44,7 @@ body {
 }
 
 .wrapper .toggle-right p {
-    color: rgb(146, 61,65);
+    color: rgb(146, 61, 65); /* Shade of red */
     font-size: 1.2em;
     font-weight: 600;
     margin-bottom: 20px;
@@ -71,7 +69,7 @@ body {
 }
 
 .wrapper .toggle-left .form h2 {
-    color: rgba(113, 99, 186, 255);
+    color: rgb(146, 61, 65); /* Shade of red */
     font-size: 1.5em;
     font-weight: 600;
     text-transform: uppercase;
@@ -81,7 +79,7 @@ body {
 }
 
 .wrapper .toggle-left .form p {
-    color: rgba(113, 99, 186, 255);
+    color: rgb(146, 61, 65); /* Shade of red */
     font-size: 1.0em;
     font-weight: 600;
     margin-bottom: 20px;
@@ -99,17 +97,15 @@ body {
     width: 100%;
     height: 100%;
     background: transparent;
-    border: none;
-    outline: none;
-    border: 2px solid rgba(113, 99, 186, 255);
+    border: 2px solid rgb(146, 61, 65); /* Shade of red */
     border-radius: 40px;
     font-size: 16px;
-    color: rgba(113, 99, 186, 255);
+    color: rgb(146, 61, 65); /* Shade of red */
     padding: 20px 45px 20px 20px;
 }
 
 .input input::placeholder {
-    color: rgba(113, 99, 186, 255);   
+    color: rgb(146, 61, 65); /* Shade of red */
 }
 
 .input i {
@@ -118,6 +114,7 @@ body {
     top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
+    color: rgb(146, 61, 65); /* Shade of red */
 }
 
 .wrapper .toggle-left .form .remember-forgot {
@@ -128,13 +125,13 @@ body {
 }
 
 .remember-forgot label input {
-    accent-color: rgba(113, 99, 186, 255);
+    accent-color: rgb(146, 61, 65); /* Shade of red */
     margin-right: 3px;
-    color: rgba(113, 99, 186, 255);
+    color: rgb(146, 61, 65); /* Shade of red */
 }
 
 .remember-forgot a {
-    accent-color: rgba(113, 99, 186, 255);
+    color: rgb(146, 61, 65); /* Shade of red */
     text-decoration: none;
 }
 
@@ -145,14 +142,14 @@ body {
 .wrapper .toggle-left .form .Login {
     width: 100%;
     height: 45px;
-    background: rgba(113, 99, 186, 255);
+    background: rgb(113, 99, 186); /* Wine color */
     border: none;
     outline: none;
     border-radius: 40px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     font-size: 16px;
-    color: #fff;
+    color: white; /* Text color */
     font-weight: 600;
 }
 
@@ -163,7 +160,7 @@ body {
 }
 
 .register p a {
-    color: rgba(113, 99, 186, 255);
+    color: rgb(146, 61, 65); /* Shade of red */
     text-decoration: none;
     font-weight: 600;
 }

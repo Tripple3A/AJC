@@ -31,18 +31,18 @@
                         ?>
                     </p>
                     <div class="input" style="color: rgb(146, 61, 65);">
-                        <input style="color: rgb(146, 61, 65);" name="email" type="text" placeholder="Email" required id="Email">
+                        <input style="color: rgb(146, 61, 65); border-color:rgb(146, 61, 65)" name="email" type="text" placeholder="Email" required id="Email">
                         <i class='bx bx-user'></i>
                     </div>
                     <div class="input">
-                        <input name="psw" type="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required id="Password">
+                        <input style="border-color:rgb(146, 61, 65)" name="psw" type="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required id="Password">
                         <i class='bx bx-lock'></i>
                     </div>
                     <div class="remember-forgot">
                         <label><input style="color: rgb(146, 61, 65);" type="checkbox">Remember me</label>
                         <a style="color: rgb(146, 61, 65);" href="#">Forgot password?</a>
                     </div>
-                    <button name="login" type="submit" class="Login" style="color: rgb(146, 61, 65);">Login</button>
+                    <button style="background-color: rgb(146, 61, 65);" name="login" type="submit" class="Login">Login</button>
                     <div class="register">
                         <p style="color: rgb(146, 61, 65);">Don't have an account?<a style="color: rgb(146, 61, 65);" href="../login/Register_view.php">Register</a></p>
                     </div>
@@ -57,7 +57,7 @@
     <script>
         function validation() {
             const isValidEmail = email => {
-                const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                const re = /^(([^<>()[\\]\\.,;:\s@"]+(\.[^<>()[\\]\\.,;:\s@"]+)*)|(".+"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$/;
                 return re.test(String(email).toLowerCase());
             }
 
