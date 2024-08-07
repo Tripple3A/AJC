@@ -287,7 +287,7 @@ include '../settings/core.php';
     }
 
     // Update quote every 30 seconds
-    setInterval(updateQuote, 30000);
+    setInterval(updateQuote, 3000);
 
     $(document).ready(function () {
         // Fetch policies from the server
