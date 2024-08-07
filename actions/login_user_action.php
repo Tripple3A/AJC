@@ -46,7 +46,12 @@ if(isset($_POST['login'])){
             $user_id_result = mysqli_query($connection,$user_query);
             $user_row = mysqli_fetch_assoc($user_id_result);
             $user_id_value = $user_row['user_id'];
-            $rid_value = $user_row['role_id'];
+
+
+            $rid_query = "SELECT role_id FROM Users WHERE email= '$email'";
+            $rid_result = mysqli_query($connection,$rid_query);
+            $rid_row = mysqli_fetch_assoc($rid_result);
+            $rid_value = $rid_row['role_id'];
             
             $_SESSION['user_id'] = $user_id_value;
             $_SESSION['role_id'] = $rid_value;
