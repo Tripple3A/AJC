@@ -17,10 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $policy_title = mysqli_real_escape_string($connection, trim($_POST['policyTitle']));
     $policy_description = mysqli_real_escape_string($connection, trim($_POST['policyDescription']));
 
-
-
-   
-
     if (empty($policy_title) || empty($policy_description)) {
         echo json_encode(['error' => 'Please fill in all fields.']);
         exit;
