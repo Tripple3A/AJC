@@ -56,9 +56,12 @@ if(isset($_POST['login'])){
 
             if($rid_value == 1){ 
                 header("Location:../view/student_home.php");
+                die();
+
             }
             else if($rid_value == 2){  
                 header("Location:../admin_view/home_admin.php");
+                die();
             }
                 
         } 
