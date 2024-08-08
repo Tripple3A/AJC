@@ -12,7 +12,7 @@ include '../settings/core.php';
     <link rel="icon" href="chore icon.png">
     <title>AJMS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+   <!--<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>-->
     <style>
         body {
             background-color: #f8f9fa;
