@@ -335,7 +335,7 @@ include '../settings/core.php';
                         $('#meetingForm')[0].reset(); // Reset the form
                     } else {
                         // Handle errors
-                        alert('Error scheduling hearing. Please try again.');
+                        alert('Error scheduling hearing. .');
                     }
                 },
                 error: function() {
