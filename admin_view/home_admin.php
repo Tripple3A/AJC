@@ -336,7 +336,7 @@ include '../settings/core.php';
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addPolicyModalLabel">Add New Policy</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button  id="addPolicyButton" type="button" class="close" data-dismiss="modal" data-toggle="modal" data-target="#addPolicyModal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -398,9 +398,11 @@ include '../settings/core.php';
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
+
     document.getElementById('addPolicyButton').addEventListener('click', function() {
-        $('#addPolicyForm').modal('show');
-    });
+    $('#addPolicyModal').modal('show');
+});
+
 </script>
 
    
