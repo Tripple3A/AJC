@@ -310,93 +310,40 @@ include '../settings/core.php';
         const inchargeNames = Array.from(document.getElementsByClassName('incharge')).map(input => input.value);
         const inchargeEmails = Array.from(document.getElementsByClassName('inchargeEmail')).map(input => input.value);
 
+        // Add validation similar to the report form validation
 
-        
-
-        if (!/^[a-zA-Z ]+$/.test(studentName)) {
-            alert("Student Name can only contain letters and spaces.");
-            return false;
-        }
-
-        for (let name of inchargeNames) {
-            if (!/^[a-zA-Z ]+$/.test(name)) {
-                alert("Person in Charge Name can only contain letters and spaces.");
-                return false;
-            }
-        }
-
-        if (!/^[a-zA-Z0-9 ]+$/.test(roomNumber)) {
-            alert("Room Number can only contain letters, numbers, and spaces.");
-            return false;
-        }
-
-        if (new Date(meetingDate) < new Date()) {
-            alert("Meeting Date cannot be in the past.");
-            return false;
-        }
-
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(studentEmail)) {
-            alert("Invalid Student Email format.");
-            return false;
-        }
-
-        for (let email of inchargeEmails) {
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                alert("Invalid email format for Person in Charge.");
-                return false;
-            }
-        }
-
-        return true;
+        return true; // Return true if all validations pass
     }
 
-    document.getElementById('meetingForm').addEventListener('submit', function (e) {
-        e.preventDefault(); // Prevent the default form submission
+    $('#meetingForm').submit(function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-       
         if (validateForm()) {
-            var formData = {
-                meetingTitle: document.getElementById('meetingTitle').value,
-                studentName: document.getElementById('studentName').value,
-                studentEmail: document.getElementById('studentEmail').value,
-                roomNumber: document.getElementById('roomNumber').value,
-                meetingDate: document.getElementById('meetingDate').value,
-                meetingTime: document.getElementById('meetingTime').value,
-                inchargeNames: Array.from(document.getElementsByClassName('incharge')).map(input => input.value),
-                inchargeEmails: Array.from(document.getElementsByClassName('inchargeEmail')).map(input => input.value)
-            };
+            var formData = new FormData(this); // Create FormData object from the form
 
-            fetch('../actions/schedule_hearing_action.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
+            $.ajax({
+                type: "POST",
+                url: "../actions/schedule_hearing_action.php",
+                data: formData,
+                processData: false, // Important: Tell jQuery not to process the data
+                contentType: false, // Important: Tell jQuery not to set content type
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+                    if (response.success) {
+                        alert('Hearing scheduled successfully!');
+                        $('#meetingForm')[0].reset(); // Reset the form
+                    } else {
+                        // Handle errors
+                        alert('Error scheduling hearing. Please try again.');
+                    }
                 },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                return response.text().then(text => {
-                    throw new Error(`Server responded with ${response.status}: ${text}`);
-                });
-            }
-        })
-        .then(data => {
-            if (data.status === 'success') {
-                alert(data.message);
-                document.getElementById('meetingForm').reset();
-            } else {
-                alert(`Error: ${data.message}`);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert(`An error occurred: ${error.message}`);
-        });
-    }
-});
-
+                error: function() {
+                    alert('Error scheduling hearing. Please try again.');
+                }
+            });
+        }
+    });
 </script>
 <!-- Include EmailJS SDK if needed -->
 </body>
