@@ -7,7 +7,7 @@ $query = "
     SELECT 
         h.hearing_id AS hearing_id,
         h.meeting_title AS title,
-        p.name AS person_in_charge,
+        p.personname AS person_in_charge,
         p.email AS person_in_charge_email,
         h.student_name,
         h.student_email,
