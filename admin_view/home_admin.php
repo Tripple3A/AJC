@@ -193,6 +193,12 @@ include '../settings/core.php';
         document.getElementById(sectionId).classList.add('active');
     }
 </script>
+
+<script>
+    document.getElementById('addPolicyButton').addEventListener('click', function() {
+        $('#addPolicyModal').modal('show');
+    });
+</script>
 </head>
 
 <body>
@@ -249,7 +255,7 @@ include '../settings/core.php';
                     <br>
                     <input type="text" class="form-control" id="searchInput" placeholder="Search for a policy...">
                 </div>
-                <button class="btn btn-wine" data-toggle="modal" data-target="#addPolicyModal">
+                <button id="addPolicyButton" class="btn btn-wine" data-toggle="modal" data-target="#addPolicyModal">
                     <i class='bx bx-plus'></i> Add Policy
                 </button>
             </div>
@@ -647,13 +653,7 @@ include '../settings/core.php';
                 });
         }
 
-        function showSection(sectionId) {
-            const sections = document.getElementsByClassName('content-section');
-            for (let i = 0; i < sections.length; i++) {
-                sections[i].classList.remove('active');
-            }
-            document.getElementById(sectionId).classList.add('active');
-        }
+        
 
     </script>
 </body>
