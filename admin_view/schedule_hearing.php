@@ -373,28 +373,29 @@ include '../settings/core.php';
                 },
                 body: JSON.stringify(formData)
             })
-            .then(response => response.text())
-            .then(text => {
-                console.log('Response Text:', text);
-                try {
-                    const data = JSON.parse(text); // Attempt to parse JSON
-                    if (data.status === 'success') {
-                        alert(data.message);
-                        document.getElementById('meetingForm').reset();
-                    } else {
-                        alert(data.message);
-                    }
-                } catch (error) {
-                    console.error('Failed to parse JSON:', error);
-                    alert('An error occurred while processing the response.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while scheduling the hearing.');
-            });
-        }
-    });
+            .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.text().then(text => {
+                    throw new Error(`Server responded with ${response.status}: ${text}`);
+                });
+            }
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                document.getElementById('meetingForm').reset();
+            } else {
+                alert(`Error: ${data.message}`);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(`An error occurred: ${error.message}`);
+        });
+    }
+});
 
 </script>
 <!-- Include EmailJS SDK if needed -->
