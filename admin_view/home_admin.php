@@ -389,6 +389,14 @@ include '../settings/core.php';
             </div>
         </div>
     </div>
+    
+    <script>
+
+    document.getElementById('addPolicyButton').addEventListener('click', function() {
+    $('#addPolicyModal').modal('show');
+});
+
+</script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -397,13 +405,6 @@ include '../settings/core.php';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-
-    document.getElementById('addPolicyButton').addEventListener('click', function() {
-    $('#addPolicyModal').modal('show');
-});
-
-</script>
 
    
 
