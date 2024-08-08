@@ -399,7 +399,7 @@ include '../settings/core.php';
 
     <script>
     document.getElementById('addPolicyButton').addEventListener('click', function() {
-        $('#addPolicyModal').modal('show');
+        $('#addPolicyForm').modal('show');
     });
 </script>
 
