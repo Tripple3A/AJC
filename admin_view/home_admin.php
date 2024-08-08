@@ -1,3 +1,4 @@
+
 <?php
 
 include '../settings/core.php';
@@ -257,8 +258,8 @@ include '../settings/core.php';
                                                 <th>Case Category</th>
                                                 <th>Number of Cases</th>
                                                 <th>Pending Cases</th>
-                                                <th>Under Investigation</th>
-                                                <th>Closed</th>
+                                                <th>Under Investigation Cases</th>
+                                                <th>Closed Cases</th>
                                                 <th>Completed Cases</th>
                                             </tr>
                                         </thead>
@@ -286,17 +287,17 @@ include '../settings/core.php';
                         </button>
                     </div>
                     <div class="modal-body">
-                    <form id="addPolicyForm">
-    <div class="form-group">
-        <label for="policyTitle">Policy Title</label>
-        <input type="text" class="form-control" name="policyTitle" id="policyTitle" required>
-    </div>
-    <div class="form-group">
-        <label for="policyDescription">Policy Description</label>
-        <textarea class="form-control" name="policyDescription" id="policyDescription" rows="3" required></textarea>
-    </div>
-    <button type="submit" class="btn btn-wine">Add Policy</button>
-</form>
+                        <form id="addPolicyForm">
+                            <div class="form-group">
+                                <label for="policyTitle">Policy Title</label>
+                                <input type="text" class="form-control" name="policyTitle" id="policyTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="policyDescription">Policy Description</label>
+                                <textarea class="form-control" name="policyDescription" id="policyDescription" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-wine">Add Policy</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -338,56 +339,11 @@ include '../settings/core.php';
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
-        
-        // Validation rules
-        const titleRegex = /^[a-zA-Z0-9 ]+$/;
-
-        const policyTitle = document.getElementById('policyTitle').value;
-        const policyDescription = document.getElementById('policyDescription').value;
-        
-
-        if (!titleRegex.test(policyTitle)) {
-            alert("Policy Title can only contain letters, numbers, and spaces.");
-            return false;
-        }
-
-        if (!titleRegex.test(policyDescription)) {
-            alert("Policy Description can only contain letters, numbers, and spaces.");
-            return false;
-        }
-
-        if (policyDescription.trim() === "") {
-            alert("Policy Description cannot be empty.");
-            return false;
-        }
-
-        if (policyTitle.trim() === "") {
-            alert("Policy Titlecannot be empty.");
-            return false;
-        }
-
-        
         document.getElementById('addPolicyForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var formElement = this;
             var formData = new FormData(formElement);
 
-        // Convert FormData to an object for logging
-        var formObject = {};
-        formData.forEach(function(value, key) {
-            formObject[key] = value;
-        });
-
-        // Log the form data to the console
-        console.log('Form Data:', formObject);
-
-
-
-        // Log each key-value pair in the FormData
-        formData.forEach((value, key) => {
-            console.log(`${key}: ${value}`);
-        });
-                
             $.ajax({
                 type: "POST",
                 url: "../actions/add_policy.php",
@@ -493,7 +449,7 @@ include '../settings/core.php';
         }
 
 //Generating report
-function generateReport() {
+       function generateReport() {
     const reportContent = document.getElementById('reportContent');
     const reportTableBody = document.getElementById('reportTableBody');
     const ctx = document.getElementById('reportChart').getContext('2d');
@@ -503,27 +459,18 @@ function generateReport() {
         .then(response => response.json())
         .then(cases => {
             const categories = {};
-            const pendingCases = {};
-            const underInvestigation = {};
-            const closed = {};
             const completedCases = {};
+            const pendingCases = {};
 
             cases.forEach(c => {
                 if (!categories[c.category]) {
                     categories[c.category] = 0;
-                    pendingCases[c.category] = 0;
-                    underInvestigation[c.category] = 0;
-                    closed[c.category] = 0;
                     completedCases[c.category] = 0;
+                    pendingCases[c.category] = 0;
                 }
                 categories[c.category]++;
-                
-                if (c.status === 'Completed') {
+                if (c.resolved_time) {
                     completedCases[c.category]++;
-                } else if (c.status === 'Under Investigation') {
-                    underInvestigation[c.category]++;
-                } else if (c.status === 'Closed') {
-                    closed[c.category]++;
                 } else {
                     pendingCases[c.category]++;
                 }
@@ -538,10 +485,8 @@ function generateReport() {
                     <tr>
                         <td>${category}</td>
                         <td>${categories[category]}</td>
-                        <td>${pendingCases[category]}</td>
-                        <td>${underInvestigation[category]}</td>
-                        <td>${closed[category]}</td>
                         <td>${completedCases[category]}</td>
+                        <td>${pendingCases[category]}</td>
                     </tr>
                 `;
                 reportTableBody.innerHTML += row;
@@ -559,31 +504,17 @@ function generateReport() {
                         borderWidth: 1
                     },
                     {
-                        label: 'Pending Cases',
-                        data: Object.values(pendingCases),
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Under Investigation Cases',
-                        data: Object.values(underInvestigation),
+                        label: 'Completed Cases',
+                        data: Object.values(completedCases),
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Closed Cases',
-                        data: Object.values(closed),
-                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                        borderColor: 'rgba(255, 206, 86, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Completed Cases',
-                        data: Object.values(completedCases),
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
+                        label: 'Pending Cases',
+                        data: Object.values(pendingCases),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     }
                 ]
@@ -606,13 +537,14 @@ function generateReport() {
         });
 }
 
-        function showSection(sectionId) {
-            const sections = document.getElementsByClassName('content-section');
-            for (let i = 0; i < sections.length; i++) {
-                sections[i].classList.remove('active');
-            }
-            document.getElementById(sectionId).classList.add('active');
-        }
+function showSection(sectionId) {
+    const sections = document.getElementsByClassName('content-section');
+    for (let i = 0; i < sections.length; i++) {
+        sections[i].classList.remove('active');
+    }
+    document.getElementById(sectionId).classList.add('active');
+}
+
     </script>
 </body>
 </html>
