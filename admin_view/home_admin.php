@@ -12,7 +12,7 @@ include '../settings/core.php';
     <link rel="icon" href="chore icon.png">
     <title>AJMS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <!--<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>-->
+   
     <style>
         body {
             background-color: #f8f9fa;
@@ -385,22 +385,15 @@ include '../settings/core.php';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Add this script block to define the showSection function -->
     <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            var sections = document.querySelectorAll('.section');
-            sections.forEach(function(section) {
-                section.style.display = 'none';
-            });
-
-            // Show the selected section
-            var selectedSection = document.getElementById(sectionId);
-            if (selectedSection) {
-                selectedSection.style.display = 'block';
-            }
+    function showSection(sectionId) {
+        const sections = document.getElementsByClassName('content-section');
+        for (let i = 0; i < sections.length; i++) {
+            sections[i].classList.remove('active');
         }
-    </script>
+        document.getElementById(sectionId).classList.add('active');
+    }
+</script>
 
     <script>
         document.getElementById('addPolicyForm').addEventListener('submit', function (event) {
