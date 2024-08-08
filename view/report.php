@@ -291,7 +291,7 @@ include '../settings/core.php';
             const nameRegex = /^[a-zA-Z ]+$/;
             const phoneRegex = /^[0-9]+$/;
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            const titleRegex = /^[a-zA-Z0-9 ]+$/;
+            const titleRegex = /^[a-zA-Z ]+$/;
 
             if (!nameRegex.test(studentName)) {
                 alert("Student Name can only contain letters and spaces.");
@@ -309,7 +309,7 @@ include '../settings/core.php';
             }
 
             if (!titleRegex.test(caseTitle)) {
-                alert("Case Title can only contain letters, numbers, and spaces.");
+                alert("Case Title can only contain letters and spaces.");
                 return false;
             }
 
