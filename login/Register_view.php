@@ -9,7 +9,7 @@
         
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
         <?php $error = isset($_GET['error']) ? $_GET['error'] : null;?>
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <script>
 $(document).ready(function() {
