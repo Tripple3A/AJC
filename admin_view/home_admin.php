@@ -252,8 +252,8 @@ include '../settings/core.php';
                     <input type="text" class="form-control" id="searchInput" placeholder="Search for a policy...">
                 </div>
                 <button id="addPolicyButton" class="btn btn-wine" data-toggle="modal" data-target="#addPolicyModal">
-                    <i class='bx bx-plus'></i> Add Policy
-                </button>
+    <i class='bx bx-plus'></i> Add Policy
+</button>
             </div>
             <div class="row">
                 <div class="col-md-3">
