@@ -1,10 +1,10 @@
-
 <?php
 
 include '../settings/core.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,8 +20,10 @@ include '../settings/core.php';
             color: #333;
             display: flex;
             height: 100vh;
-            overflow: auto; /* Allow scrolling on the body */
+            overflow: auto;
+            /* Allow scrolling on the body */
         }
+
         .sidebar {
             position: sticky;
             top: 0;
@@ -29,44 +31,56 @@ include '../settings/core.php';
             bottom: 0;
             width: 110px;
             height: 100vh;
-            padding: 0 1.7rem 0 0; /* Removed left padding */
+            padding: 0 1.7rem 0 0;
+            /* Removed left padding */
             color: #fff;
             overflow: hidden;
             transition: all 0.5s linear;
             background: #800020;
         }
+
         .sidebar:hover {
             width: 240px;
             transition: 0.5s;
         }
+
         .logo {
             height: 80px;
             padding: 16px;
-            text-align: center; /* Center the logo */
-            width: 100px; /* Set a fixed width */
-            margin: 0 auto; /* Center horizontally */
+            text-align: center;
+            /* Center the logo */
+            width: 100px;
+            /* Set a fixed width */
+            margin: 0 auto;
+            /* Center horizontally */
         }
+
         .logo img {
             max-width: 100%;
             height: auto;
-            max-height: 100%; /* Ensure the logo fits within the container */
+            max-height: 100%;
+            /* Ensure the logo fits within the container */
         }
+
         .menu {
             height: 88%;
             position: relative;
             list-style: none;
             padding: 0;
         }
+
         .menu li {
             padding: 1rem;
             margin: 8px 0;
             border-radius: 8px;
             transition: all 0.5s ease-in-out;
         }
+
         .menu li:hover,
         .active {
             background: #e0e0e058;
         }
+
         .menu a {
             color: #fff;
             font-size: 14px;
@@ -75,77 +89,102 @@ include '../settings/core.php';
             align-items: center;
             gap: 1.5rem;
         }
+
         .menu a span {
             overflow: hidden;
         }
+
         .menu a i {
             font-size: 1.2rem;
         }
+
         .main-content {
             margin-left: 30px;
             padding: 20px;
             flex-grow: 1;
             overflow-y: auto;
         }
+
         .search-bar {
             margin-bottom: 20px;
         }
+
         .welcome-msg {
-            color: #722f37; /* Wine color */
+            color: #722f37;
+            /* Wine color */
         }
+
         .navbar {
-            background-color: #722f37; /* Wine color */
+            background-color: #722f37;
+            /* Wine color */
             color: #ffffff;
         }
+
         .navbar a {
             color: #ffffff;
         }
+
         .card {
             border: none;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
+
         .card-header {
-            background-color: #722f37; /* Wine color */
+            background-color: #722f37;
+            /* Wine color */
             color: white;
             font-weight: bold;
         }
+
         .btn-wine {
             background-color: #722f37;
             color: white;
         }
+
         .btn-wine:hover {
             background-color: #5a2329;
         }
+
         .list-group-item {
             border: none;
             border-bottom: 1px solid #ddd;
             border-radius: 0;
         }
+
         .list-group-item:last-child {
             border-bottom: none;
         }
+
         .btn-icon {
             font-size: 1.2rem;
         }
+
         .btn-icon:hover {
             opacity: 0.8;
         }
-        .modal-header, .modal-body {
+
+        .modal-header,
+        .modal-body {
             background-color: #f8f9fa;
         }
+
         .modal-title {
-            color: #722f37; /* Wine color */
+            color: #722f37;
+            /* Wine color */
         }
+
         .content-section {
             display: none;
         }
+
         .active {
             display: block;
         }
     </style>
 </head>
+
 <body>
     <div class="sidebar">
         <div class="logo">
@@ -207,8 +246,10 @@ include '../settings/core.php';
             <div class="row">
                 <div class="col-md-3">
                     <div class="list-group" id="menu">
-                        <button class="list-group-item list-group-item-action" onclick="showSection('policyListSection')">Policy List</button>
-                        <button class="list-group-item list-group-item-action" onclick="showSection('reportSection')">Generate Report</button>
+                        <button class="list-group-item list-group-item-action"
+                            onclick="showSection('policyListSection')">Policy List</button>
+                        <button class="list-group-item list-group-item-action"
+                            onclick="showSection('reportSection')">Generate Report</button>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -242,7 +283,7 @@ include '../settings/core.php';
                             </ul>
                         </div>
                     </div>
-                    
+
                     <div id="reportSection" class="content-section">
                         <div class="card">
                             <div class="card-header">
@@ -268,7 +309,7 @@ include '../settings/core.php';
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -277,7 +318,8 @@ include '../settings/core.php';
         </div>
 
         <!-- Add Policy Modal -->
-        <div class="modal fade" id="addPolicyModal" tabindex="-1" role="dialog" aria-labelledby="addPolicyModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addPolicyModal" tabindex="-1" role="dialog" aria-labelledby="addPolicyModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -294,7 +336,8 @@ include '../settings/core.php';
                             </div>
                             <div class="form-group">
                                 <label for="policyDescription">Policy Description</label>
-                                <textarea class="form-control" name="policyDescription" id="policyDescription" rows="3" required></textarea>
+                                <textarea class="form-control" name="policyDescription" id="policyDescription" rows="3"
+                                    required></textarea>
                             </div>
                             <button type="submit" class="btn btn-wine">Add Policy</button>
                         </form>
@@ -304,7 +347,8 @@ include '../settings/core.php';
         </div>
 
         <!-- Update Policy Modal -->
-        <div class="modal fade" id="updatePolicyModal" tabindex="-1" role="dialog" aria-labelledby="updatePolicyModalLabel" aria-hidden="true">
+        <div class="modal fade" id="updatePolicyModal" tabindex="-1" role="dialog"
+            aria-labelledby="updatePolicyModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -318,11 +362,13 @@ include '../settings/core.php';
                             <input type="hidden" name="policy_id" id="updatePolicyId">
                             <div class="form-group">
                                 <label for="updatePolicyTitle">Policy Title</label>
-                                <input type="text" class="form-control" name="policyTitle" id="updatePolicyTitle" required>
+                                <input type="text" class="form-control" name="policyTitle" id="updatePolicyTitle"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="updatePolicyDescription">Policy Description</label>
-                                <textarea class="form-control" name="policyDescription" id="updatePolicyDescription" rows="3" required></textarea>
+                                <textarea class="form-control" name="policyDescription" id="updatePolicyDescription"
+                                    rows="3" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-wine">Update Policy</button>
                         </form>
@@ -333,16 +379,41 @@ include '../settings/core.php';
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <script>
-        document.getElementById('addPolicyForm').addEventListener('submit', function(event) {
+        document.getElementById('addPolicyForm').addEventListener('submit', function (event) {
             event.preventDefault();
             var formElement = this;
             var formData = new FormData(formElement);
+
+            const policyTitle = document.getElementById('policyTitle').value;
+            const policyDescription = document.getElementById('policyDescription').value;
+
+            // Validation rules
+            const titleRegex = /^[a-zA-Z ]+$/;
+
+            if (!titleRegex.test(policyTitle)) {
+                alert("Policy Title can only contain letters and spaces.");
+                return false;
+            }
+            if (!titleRegex.test(policyDescription)) {
+                alert("Policy Description can only contain letters, numbers, and spaces.");
+                return false;
+            }
+            if (policyTitle.trim() === "") {
+                alert("Policy Title cannot be empty.");
+                return false;
+            }
+
+            if (policyDescription.trim() === "") {
+                alert("Policy Description cannot be empty.");
+                return false;
+            }
 
             $.ajax({
                 type: "POST",
@@ -351,7 +422,7 @@ include '../settings/core.php';
                 processData: false,
                 contentType: false,
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         $('#addPolicyModal').modal('hide');
                         alert(response.success);
@@ -361,13 +432,13 @@ include '../settings/core.php';
                         alert('An error occurred while adding policy');
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log('AJAX Error:', textStatus, errorThrown);
                 }
             });
         });
 
-        document.getElementById('searchInput').addEventListener('keyup', function() {
+        document.getElementById('searchInput').addEventListener('keyup', function () {
             var input = this.value.toLowerCase();
             var items = document.getElementsByClassName('list-group-item');
             for (var i = 0; i < items.length; i++) {
@@ -383,7 +454,7 @@ include '../settings/core.php';
                 url: "../actions/get_policy.php",
                 data: { policy_id: id },
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     if (response.error) {
                         alert(response.error);
                     } else {
@@ -393,13 +464,13 @@ include '../settings/core.php';
                         $('#updatePolicyModal').modal('show');
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log('AJAX Error:', textStatus, errorThrown);
                 }
             });
         }
 
-        document.getElementById('updatePolicyForm').addEventListener('submit', function(event) {
+        document.getElementById('updatePolicyForm').addEventListener('submit', function (event) {
             event.preventDefault();
             var formElement = this;
             var formData = new FormData(formElement);
@@ -411,7 +482,7 @@ include '../settings/core.php';
                 processData: false,
                 contentType: false,
                 dataType: "json",
-                success: function(response) {
+                success: function (response) {
                     if (response.success) {
                         $('#updatePolicyModal').modal('hide');
                         alert(response.success);
@@ -420,7 +491,7 @@ include '../settings/core.php';
                         alert(response.error);
                     }
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log('AJAX Error:', textStatus, errorThrown);
                 }
             });
@@ -433,7 +504,7 @@ include '../settings/core.php';
                     url: "../actions/delete_policy.php",
                     data: { policy_id: id },
                     dataType: "json",
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             alert(response.success);
                             location.reload(); // Reload the page to see the changes
@@ -441,7 +512,7 @@ include '../settings/core.php';
                             alert(response.error);
                         }
                     },
-                    error: function(jqXHR, textStatus, errorThrown) {
+                    error: function (jqXHR, textStatus, errorThrown) {
                         console.log('AJAX Error:', textStatus, errorThrown);
                     }
                 });
@@ -449,50 +520,50 @@ include '../settings/core.php';
         }
 
         function generateReport() {
-    const reportContent = document.getElementById('reportContent');
-    const reportTableBody = document.getElementById('reportTableBody');
-    const ctx = document.getElementById('reportChart').getContext('2d');
-    
-    // Fetch data from the server
-    fetch('../actions/generate_report.php')
-        .then(response => response.json())
-        .then(cases => {
-            const categories = {};
-            const pendingCases = {};
-            const underInvestigation = {};
-            const closed = {};
-            const completedCases = {};
+            const reportContent = document.getElementById('reportContent');
+            const reportTableBody = document.getElementById('reportTableBody');
+            const ctx = document.getElementById('reportChart').getContext('2d');
 
-            cases.forEach(c => {
-                if (!categories[c.category]) {
-                    categories[c.category] = 0;
-                    pendingCases[c.category] = 0;
-                    underInvestigation[c.category] = 0;
-                    closed[c.category] = 0;
-                    completedCases[c.category] = 0;
-                }
-                
-                categories[c.category]++;
-                
-                // Categorize based on status
-                if (c.status === 'Completed') {
-                    completedCases[c.category]++;
-                } else if (c.status === 'Under Investigation') {
-                    underInvestigation[c.category]++;
-                } else if (c.status === 'Closed') {
-                    closed[c.category]++;
-                } else {
-                    // Default to Pending if none of the above statuses match
-                    pendingCases[c.category]++;
-                }
-            });
+            // Fetch data from the server
+            fetch('../actions/generate_report.php')
+                .then(response => response.json())
+                .then(cases => {
+                    const categories = {};
+                    const pendingCases = {};
+                    const underInvestigation = {};
+                    const closed = {};
+                    const completedCases = {};
 
-            // Clear previous content
-            reportTableBody.innerHTML = '';
-            
-            // Populate the table
-            for (const category in categories) {
-                const row = `
+                    cases.forEach(c => {
+                        if (!categories[c.category]) {
+                            categories[c.category] = 0;
+                            pendingCases[c.category] = 0;
+                            underInvestigation[c.category] = 0;
+                            closed[c.category] = 0;
+                            completedCases[c.category] = 0;
+                        }
+
+                        categories[c.category]++;
+
+                        // Categorize based on status
+                        if (c.status === 'Completed') {
+                            completedCases[c.category]++;
+                        } else if (c.status === 'Under Investigation') {
+                            underInvestigation[c.category]++;
+                        } else if (c.status === 'Closed') {
+                            closed[c.category]++;
+                        } else {
+                            // Default to Pending if none of the above statuses match
+                            pendingCases[c.category]++;
+                        }
+                    });
+
+                    // Clear previous content
+                    reportTableBody.innerHTML = '';
+
+                    // Populate the table
+                    for (const category in categories) {
+                        const row = `
                     <tr>
                         <td>${category}</td>
                         <td>${categories[category]}</td>
@@ -502,76 +573,77 @@ include '../settings/core.php';
                         <td>${completedCases[category]}</td>
                     </tr>
                 `;
-                reportTableBody.innerHTML += row;
-            }
-
-            // Generate chart
-            const chartData = {
-                labels: Object.keys(categories),
-                datasets: [
-                    {
-                        label: 'Total Cases',
-                        data: Object.values(categories),
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Pending Cases',
-                        data: Object.values(pendingCases),
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Under Investigation Cases',
-                        data: Object.values(underInvestigation),
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Closed Cases',
-                        data: Object.values(closed),
-                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                        borderColor: 'rgba(255, 206, 86, 1)',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Completed Cases',
-                        data: Object.values(completedCases),
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                        borderColor: 'rgba(153, 102, 255, 1)',
-                        borderWidth: 1
+                        reportTableBody.innerHTML += row;
                     }
-                ]
-            };
 
-            new Chart(ctx, {
-                type: 'bar',
-                data: chartData,
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                    // Generate chart
+                    const chartData = {
+                        labels: Object.keys(categories),
+                        datasets: [
+                            {
+                                label: 'Total Cases',
+                                data: Object.values(categories),
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Pending Cases',
+                                data: Object.values(pendingCases),
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Under Investigation Cases',
+                                data: Object.values(underInvestigation),
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Closed Cases',
+                                data: Object.values(closed),
+                                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                                borderColor: 'rgba(255, 206, 86, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Completed Cases',
+                                data: Object.values(completedCases),
+                                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                borderColor: 'rgba(153, 102, 255, 1)',
+                                borderWidth: 1
+                            }
+                        ]
+                    };
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: chartData,
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
                         }
-                    }
-                }
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching report data:', error);
-        });
-}
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching report data:', error);
+                });
+        }
 
-function showSection(sectionId) {
-    const sections = document.getElementsByClassName('content-section');
-    for (let i = 0; i < sections.length; i++) {
-        sections[i].classList.remove('active');
-    }
-    document.getElementById(sectionId).classList.add('active');
-}
+        function showSection(sectionId) {
+            const sections = document.getElementsByClassName('content-section');
+            for (let i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            document.getElementById(sectionId).classList.add('active');
+        }
 
     </script>
 </body>
+
 </html>
