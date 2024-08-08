@@ -448,8 +448,7 @@ include '../settings/core.php';
             }
         }
 
-//Generating report
-       function generateReport() {
+        function generateReport() {
     const reportContent = document.getElementById('reportContent');
     const reportTableBody = document.getElementById('reportTableBody');
     const ctx = document.getElementById('reportChart').getContext('2d');
@@ -459,19 +458,31 @@ include '../settings/core.php';
         .then(response => response.json())
         .then(cases => {
             const categories = {};
-            const completedCases = {};
             const pendingCases = {};
+            const underInvestigation = {};
+            const closed = {};
+            const completedCases = {};
 
             cases.forEach(c => {
                 if (!categories[c.category]) {
                     categories[c.category] = 0;
-                    completedCases[c.category] = 0;
                     pendingCases[c.category] = 0;
+                    underInvestigation[c.category] = 0;
+                    closed[c.category] = 0;
+                    completedCases[c.category] = 0;
                 }
+                
                 categories[c.category]++;
-                if (c.resolved_time) {
+                
+                // Categorize based on status
+                if (c.status === 'Completed') {
                     completedCases[c.category]++;
+                } else if (c.status === 'Under Investigation') {
+                    underInvestigation[c.category]++;
+                } else if (c.status === 'Closed') {
+                    closed[c.category]++;
                 } else {
+                    // Default to Pending if none of the above statuses match
                     pendingCases[c.category]++;
                 }
             });
@@ -485,8 +496,10 @@ include '../settings/core.php';
                     <tr>
                         <td>${category}</td>
                         <td>${categories[category]}</td>
-                        <td>${completedCases[category]}</td>
                         <td>${pendingCases[category]}</td>
+                        <td>${underInvestigation[category]}</td>
+                        <td>${closed[category]}</td>
+                        <td>${completedCases[category]}</td>
                     </tr>
                 `;
                 reportTableBody.innerHTML += row;
@@ -504,17 +517,31 @@ include '../settings/core.php';
                         borderWidth: 1
                     },
                     {
-                        label: 'Completed Cases',
-                        data: Object.values(completedCases),
+                        label: 'Pending Cases',
+                        data: Object.values(pendingCases),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Under Investigation Cases',
+                        data: Object.values(underInvestigation),
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Pending Cases',
-                        data: Object.values(pendingCases),
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
+                        label: 'Closed Cases',
+                        data: Object.values(closed),
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Completed Cases',
+                        data: Object.values(completedCases),
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
                         borderWidth: 1
                     }
                 ]
