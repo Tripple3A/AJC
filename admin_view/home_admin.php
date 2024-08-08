@@ -12,6 +12,7 @@ include '../settings/core.php';
     
     <title>AJMS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preload" href="https://unpkg.com/boxicons@2.1.4/fonts/boxicons.woff2" as="font" type="font/woff2" crossorigin="anonymous">
    
     <style>
         body {
