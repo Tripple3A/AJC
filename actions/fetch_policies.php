@@ -3,7 +3,7 @@
 // Fetch policies from the database
 function getPolicies(){
     include '../settings/connection.php'; // Include the database connection
-    $query = "SELECT policy_id, policy_title, policy_description FROM policy"; // Update this to match your actual table and columns
+    $query = "SELECT policy_id, policy_description, last_update, policy_title, user_id FROM policy"; 
     $result = mysqli_query($connection, $query);
     $policies = [];
 

@@ -241,6 +241,7 @@ include '../settings/core.php';
                             </ul>
                         </div>
                     </div>
+                    
                     <div id="reportSection" class="content-section">
                         <div class="card">
                             <div class="card-header">
@@ -255,8 +256,10 @@ include '../settings/core.php';
                                             <tr>
                                                 <th>Case Category</th>
                                                 <th>Number of Cases</th>
-                                                <th>Completed Cases</th>
                                                 <th>Pending Cases</th>
+                                                <th>Under Investigation</th>
+                                                <th>Closed</th>
+                                                <th>Completed Cases</th>
                                             </tr>
                                         </thead>
                                         <tbody id="reportTableBody">
@@ -264,6 +267,7 @@ include '../settings/core.php';
                                         </tbody>
                                     </table>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>
@@ -443,24 +447,38 @@ include '../settings/core.php';
             }
         }
 
-        function generateReport() {
-            const reportContent = document.getElementById('reportContent');
-            const reportTableBody = document.getElementById('reportTableBody');
-            const ctx = document.getElementById('reportChart').getContext('2d');
-            
+//Generating report
+function generateReport() {
+    const reportContent = document.getElementById('reportContent');
+    const reportTableBody = document.getElementById('reportTableBody');
+    const ctx = document.getElementById('reportChart').getContext('2d');
+    
+    // Fetch data from the server
+    fetch('../actions/generate_report.php')
+        .then(response => response.json())
+        .then(cases => {
             const categories = {};
-            const completedCases = {};
             const pendingCases = {};
+            const underInvestigation = {};
+            const closed = {};
+            const completedCases = {};
 
             cases.forEach(c => {
                 if (!categories[c.category]) {
                     categories[c.category] = 0;
-                    completedCases[c.category] = 0;
                     pendingCases[c.category] = 0;
+                    underInvestigation[c.category] = 0;
+                    closed[c.category] = 0;
+                    completedCases[c.category] = 0;
                 }
                 categories[c.category]++;
-                if (c.resolvedTime) {
+                
+                if (c.status === 'Completed') {
                     completedCases[c.category]++;
+                } else if (c.status === 'Under Investigation') {
+                    underInvestigation[c.category]++;
+                } else if (c.status === 'Closed') {
+                    closed[c.category]++;
                 } else {
                     pendingCases[c.category]++;
                 }
@@ -475,8 +493,10 @@ include '../settings/core.php';
                     <tr>
                         <td>${category}</td>
                         <td>${categories[category]}</td>
-                        <td>${completedCases[category]}</td>
                         <td>${pendingCases[category]}</td>
+                        <td>${underInvestigation[category]}</td>
+                        <td>${closed[category]}</td>
+                        <td>${completedCases[category]}</td>
                     </tr>
                 `;
                 reportTableBody.innerHTML += row;
@@ -494,17 +514,31 @@ include '../settings/core.php';
                         borderWidth: 1
                     },
                     {
-                        label: 'Completed Cases',
-                        data: Object.values(completedCases),
+                        label: 'Pending Cases',
+                        data: Object.values(pendingCases),
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Under Investigation Cases',
+                        data: Object.values(underInvestigation),
                         backgroundColor: 'rgba(54, 162, 235, 0.2)',
                         borderColor: 'rgba(54, 162, 235, 1)',
                         borderWidth: 1
                     },
                     {
-                        label: 'Pending Cases',
-                        data: Object.values(pendingCases),
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
+                        label: 'Closed Cases',
+                        data: Object.values(closed),
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Completed Cases',
+                        data: Object.values(completedCases),
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
                         borderWidth: 1
                     }
                 ]
@@ -521,15 +555,21 @@ include '../settings/core.php';
                     }
                 }
             });
-        }
+        })
+        .catch(error => {
+            console.error('Error fetching report data:', error);
+        });
+}
 
-        function showSection(sectionId) {
-            const sections = document.getElementsByClassName('content-section');
-            for (let i = 0; i < sections.length; i++) {
-                sections[i].classList.remove('active');
-            }
-            document.getElementById(sectionId).classList.add('active');
-        }
+function showSection(sectionId) {
+    const sections = document.getElementsByClassName('content-section');
+    for (let i = 0; i < sections.length; i++) {
+        sections[i].classList.remove('active');
+    }
+    document.getElementById(sectionId).classList.add('active');
+}
+
+
     </script>
 </body>
 </html>
