@@ -294,22 +294,7 @@ include '../settings/core.php';
 
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- <!-- Add this script block to define the showSection function -->
- <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            var sections = document.querySelectorAll('.section');
-            sections.forEach(function(section) {
-                section.style.display = 'none';
-            });
-
-            // Show the selected section
-            var selectedSection = document.getElementById(sectionId);
-            if (selectedSection) {
-                selectedSection.style.display = 'block';
-            }
-        }
-    </script>
+ 
     <script>
         // JavaScript for search functionality
         document.getElementById('searchInput').addEventListener('keyup', function() {
