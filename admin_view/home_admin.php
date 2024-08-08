@@ -222,12 +222,12 @@ include '../settings/core.php';
                                 $policyList = getPolicies();
                                 foreach ($policyList as $policy) {
                                     echo "
-                                        <li class='list-group-item d-flex justify-content-between align-items-center'>
+                                        <li class='list-group-item'>
                                             <div>
                                                 <h5>{$policy['policy_title']}</h5>
                                                 <p>{$policy['policy_description']}</p>
                                             </div>
-                                            <div>
+                                            <div class='d-flex justify-content-end'>
                                                 <button class='btn btn-wine btn-sm btn-icon' onclick='updatePolicy({$policy['policy_id']})'>
                                                     <i class='bx bx-edit'></i> Update
                                                 </button>
