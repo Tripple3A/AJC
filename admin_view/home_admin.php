@@ -286,17 +286,17 @@ include '../settings/core.php';
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="addPolicyForm">
-                            <div class="form-group">
-                                <label for="policyTitle">Policy Title</label>
-                                <input type="text" class="form-control" name="policyTitle" id="policyTitle" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="policyDescription">Policy Description</label>
-                                <textarea class="form-control" name="policyDescription" id="policyDescription" rows="3" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-wine">Add Policy</button>
-                        </form>
+                    <form id="addPolicyForm">
+    <div class="form-group">
+        <label for="policyTitle">Policy Title</label>
+        <input type="text" class="form-control" name="policyTitle" id="policyTitle" required>
+    </div>
+    <div class="form-group">
+        <label for="policyDescription">Policy Description</label>
+        <textarea class="form-control" name="policyDescription" id="policyDescription" rows="3" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-wine">Add Policy</button>
+</form>
                     </div>
                 </div>
             </div>
@@ -338,11 +338,56 @@ include '../settings/core.php';
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script>
+        
+        // Validation rules
+        const titleRegex = /^[a-zA-Z0-9 ]+$/;
+
+        const policyTitle = document.getElementById('policyTitle').value;
+        const policyDescription = document.getElementById('policyDescription').value;
+        
+
+        if (!titleRegex.test(policyTitle)) {
+            alert("Policy Title can only contain letters, numbers, and spaces.");
+            return false;
+        }
+
+        if (!titleRegex.test(policyDescription)) {
+            alert("Policy Description can only contain letters, numbers, and spaces.");
+            return false;
+        }
+
+        if (policyDescription.trim() === "") {
+            alert("Policy Description cannot be empty.");
+            return false;
+        }
+
+        if (policyTitle.trim() === "") {
+            alert("Policy Titlecannot be empty.");
+            return false;
+        }
+
+        
         document.getElementById('addPolicyForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var formElement = this;
             var formData = new FormData(formElement);
 
+        // Convert FormData to an object for logging
+        var formObject = {};
+        formData.forEach(function(value, key) {
+            formObject[key] = value;
+        });
+
+        // Log the form data to the console
+        console.log('Form Data:', formObject);
+
+
+
+        // Log each key-value pair in the FormData
+        formData.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
+                
             $.ajax({
                 type: "POST",
                 url: "../actions/add_policy.php",
@@ -561,15 +606,13 @@ function generateReport() {
         });
 }
 
-function showSection(sectionId) {
-    const sections = document.getElementsByClassName('content-section');
-    for (let i = 0; i < sections.length; i++) {
-        sections[i].classList.remove('active');
-    }
-    document.getElementById(sectionId).classList.add('active');
-}
-
-
+        function showSection(sectionId) {
+            const sections = document.getElementsByClassName('content-section');
+            for (let i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            document.getElementById(sectionId).classList.add('active');
+        }
     </script>
 </body>
 </html>
