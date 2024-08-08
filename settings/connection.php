@@ -1,7 +1,7 @@
 <?php
 // Check if the constant is not defined before defining it
 if (!defined('DB_SERVER')) {
-    define('DB_SERVER', '127.0.0.1');
+    define('DB_SERVER', 'localhost');
 }
 
 if (!defined('DB_USERNAME')) {
