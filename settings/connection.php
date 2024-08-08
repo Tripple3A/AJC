@@ -13,7 +13,7 @@ if (!defined('DB_PASSWORD')) {
 }
 
 if (!defined('DB_NAME')) {
-    define('DB_NAME', 'ajms');
+    define('DB_NAME', 'AJMS');
 }
 
 // Establish database connection
