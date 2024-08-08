@@ -134,7 +134,7 @@ CREATE TABLE `Hearings` (
 CREATE TABLE `PersonsInCharge` (
   `person_id` INT PRIMARY KEY AUTO_INCREMENT,
   `hearing_id` INT NOT NULL,
-  `name` VARCHAR(255) NOT NULL,
+  `personname` VARCHAR(255) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   FOREIGN KEY (`hearing_id`) REFERENCES `Hearings`(`hearing_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

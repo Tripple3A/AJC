@@ -28,13 +28,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (mysqli_query($connection, $sql)) {
         $hearingId = mysqli_insert_id($connection);
 
+
+     
+
         // Insert persons in charge into PersonsInCharge table
         $success = true;
+        $errorMessage = ''; // Variable to store the error message
         for ($i = 0; $i < count($inchargeNames); $i++) {
             $name = mysqli_real_escape_string($connection, $inchargeNames[$i]);
             $email = mysqli_real_escape_string($connection, $inchargeEmails[$i]);
-            $sql = "INSERT INTO PersonsInCharge (hearing_id, name, email) VALUES ('$hearingId', '$name', '$email')";
+            $sql = "INSERT INTO PersonsInCharge (hearing_id, personname, email) VALUES ('$hearingId', '$name', '$email')";
             if (!mysqli_query($connection, $sql)) {
+                $errorMessage = mysqli_error($connection); 
                 $success = false;
                 break;
             }
@@ -55,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (send_email_to($studentEmail, $subject, $body)) {
                 echo json_encode(['status' => 'success', 'message' => 'Hearing scheduled successfully and email sent to student.']);
             } else {
-                echo json_encode(['status' => 'success', 'message' => 'Hearing scheduled successfully, but failed to send email to student.']);
+                echo json_encode(['status' => 'success', 'message' => 'Hearing scheduled successfully, but failed to send email to student.','sql_error' => $errorMessage, $name,$email,$hearingId,$sql]);
             }
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to add persons in charge.']);
