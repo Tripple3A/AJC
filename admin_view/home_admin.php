@@ -183,6 +183,16 @@ include '../settings/core.php';
             display: block;
         }
     </style>
+
+<script>
+    function showSection(sectionId) {
+        const sections = document.getElementsByClassName('content-section');
+        for (let i = 0; i < sections.length; i++) {
+            sections[i].classList.remove('active');
+        }
+        document.getElementById(sectionId).classList.add('active');
+    }
+</script>
 </head>
 
 <body>
@@ -385,15 +395,7 @@ include '../settings/core.php';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <script>
-    function showSection(sectionId) {
-        const sections = document.getElementsByClassName('content-section');
-        for (let i = 0; i < sections.length; i++) {
-            sections[i].classList.remove('active');
-        }
-        document.getElementById(sectionId).classList.add('active');
-    }
-</script>
+   
 
     <script>
         document.getElementById('addPolicyForm').addEventListener('submit', function (event) {
