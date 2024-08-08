@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="../css/registration.css">
         
         <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <?php $error = isset($_GET['error']) ? $_GET['error'] : null;?>
 
 
         <script>
@@ -76,17 +77,7 @@ function validation() {
                 <form action="../actions/register_user_action.php" method="POST" class="Signup" id="registration"  name="registration" onsubmit="return validation()">
 
                     <h1 style="color: rgb(146, 61, 65);">Registration</h1>
-                    <?php
-                    if (!empty($errors)) {
-    echo "<ul>";
-    foreach ($errors as $error) {
-        echo "<li>$error</li>";
-    }
-    echo "</ul>";
-}
-
-    ?>
-
+                    <p style ="color: rgb(146, 61, 65); font-weight: bolder; font-size: 25px;"><?php echo $error;?></p>
                     <p id="result"></p>
 
                     <div class="input-box">
@@ -99,17 +90,6 @@ function validation() {
                     <input style="color:rgb(146, 61, 65); border-color: rgb(146, 61, 65); background-color: white;" name="lastname" type="text"  required id="lastname">
                     </div>
                     </div>
-
-
-                    
-
-                    
-                
-
-
-                    
-
-
                     <div class="input-box">
                     
                     <div class="input-field">
@@ -120,7 +100,6 @@ function validation() {
 
                         <?php
                         include "../functions/select_role.php";
-
 
                         //Looping through the roles to builg the options
                         foreach ($roles as $role) {
@@ -155,23 +134,15 @@ function validation() {
 
                     <label class="confirmation" value=1><input type="checkbox" name= "confirmation" id="confirmation"style="color: rgb(146, 61, 65);">I hereby declare that the above 
                     information is true and correct</label>
-
                         <div>
-                    <button name="register" type="submit" id="#register"style="background-color: rgb(146, 61, 65); border-color: rgb(146, 61, 65); color:white;padding: 12px;border-radius: 10%; text-align: center; display: inline;">Register</button>
-        
+                    <button name="register" type="submit" id="#register"style=" background-color: rgb(146, 61, 65); border-color: rgb(146, 61, 65); color:white;padding: 12px;border-radius: 10%; text-align: center; display: inline;">Register</button>
+                    <br>
                 </div>
 
                     <div class="Login">
                         <p>You can now <a href="../login/Login_view.php"style="color: rgb(146, 61, 65);">Log in</a></p>
                     </div>
                 </form>
-
-                </div>
-
-
-                
-
-
-                       
+                </div>                      
     </body>
 </html>
