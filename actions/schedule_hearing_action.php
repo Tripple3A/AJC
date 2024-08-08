@@ -6,20 +6,30 @@ include '../actions/email_send.php'; // Make sure this path is correct
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    
-    $meetingTitle = mysqli_real_escape_string($connection, $_POST['meetingTitle']);
-    $studentName = mysqli_real_escape_string($connection, $_POST['studentName']);
-    $studentEmail = mysqli_real_escape_string($connection, $_POST['studentEmail']);
-    $roomNumber = mysqli_real_escape_string($connection, $_POST['roomNumber']);
-    $meetingDate = mysqli_real_escape_string($connection, $_POST['meetingDate']);
-    $meetingTime = mysqli_real_escape_string($connection, $_POST['meetingTime']);
-    $inchargeNames = json_decode($_POST['inchargeNames'], true);
-    $inchargeEmails = json_decode($_POST['inchargeEmails'], true);
 
-    if (!$inchargeNames || !$inchargeEmails) {
-        echo json_encode(['status' => 'error', 'message' => 'Invalid incharge data.']);
-        exit;
-    }
+     // Read the raw POST data
+     $input = file_get_contents('php://input');
+     $data = json_decode($input, true);
+ 
+     if (!$data) {
+         echo json_encode(['status' => 'error', 'message' => 'Invalid JSON input.']);
+         exit;
+     }
+    
+   // Sanitize and extract the data
+   $meetingTitle = mysqli_real_escape_string($connection, $data['meetingTitle']);
+   $studentName = mysqli_real_escape_string($connection, $data['studentName']);
+   $studentEmail = mysqli_real_escape_string($connection, $data['studentEmail']);
+   $roomNumber = mysqli_real_escape_string($connection, $data['roomNumber']);
+   $meetingDate = mysqli_real_escape_string($connection, $data['meetingDate']);
+   $meetingTime = mysqli_real_escape_string($connection, $data['meetingTime']);
+   $inchargeNames = $data['inchargeNames'];
+   $inchargeEmails = $data['inchargeEmails'];
+
+   if (!$inchargeNames || !$inchargeEmails || count($inchargeNames) !== count($inchargeEmails)) {
+       echo json_encode(['status' => 'error', 'message' => 'Invalid incharge data.']);
+       exit;
+   }
 
     // Insert into Hearings table
     $sql = "INSERT INTO Hearings (meeting_title, student_name, student_email, room_number, meeting_date, meeting_time) VALUES ('$meetingTitle', '$studentName', '$studentEmail', '$roomNumber', '$meetingDate', '$meetingTime')";
@@ -59,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (send_email_to($studentEmail, $subject, $body)) {
                 echo json_encode(['status' => 'success', 'message' => 'Hearing scheduled successfully and email sent to student.']);
             } else {
-                echo json_encode(['status' => 'success', 'message' => 'Hearing scheduled successfully, but failed to send email to student.','sql_error' => $errorMessage]);
+                echo json_encode(['status' => 'success', 'message' => 'Hearing scheduled successfully, but failed to send email to student.','sql_error' => $errorMessage,$studentName,$roomNumber,$meetingDate,$meetingTime,$studentEmail]);
             }
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to add persons in charge.']);

@@ -12,3 +12,14 @@ Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP h
 Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host.
 Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host.
 Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host.
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host.
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host.
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host.
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo failed: No such host is known. 
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo failed: No such host is known. 
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo failed: No such host is known. 
+Message could not be sent. Mailer Error: SMTP Error: data not accepted.SMTP server error: DATA command failed
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host. Failed to connect to serverSMTP server error: Failed to connect to server Additional SMTP info: php_network_getaddresses: getaddrinfo failed: No such host is known. 
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host.
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host.
+Message could not be sent. Mailer Error: SMTP Error: Could not connect to SMTP host.

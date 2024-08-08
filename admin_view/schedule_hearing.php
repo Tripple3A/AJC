@@ -353,27 +353,29 @@ include '../settings/core.php';
     document.getElementById('meetingForm').addEventListener('submit', function (e) {
         e.preventDefault(); // Prevent the default form submission
 
+       
         if (validateForm()) {
-            var formData = new FormData(this);
-
-            var inchargeNames = Array.from(document.getElementsByClassName('incharge')).map(input => input.value);
-            var inchargeEmails = Array.from(document.getElementsByClassName('inchargeEmail')).map(input => input.value);
-
-            formData.append('inchargeNames', JSON.stringify(inchargeNames));
-            formData.append('inchargeEmails', JSON.stringify(inchargeEmails));
-
-            formData.forEach((value, key) => {
-    console.log(`${key}: ${value}`);
-});
-
+            var formData = {
+                meetingTitle: document.getElementById('meetingTitle').value,
+                studentName: document.getElementById('studentName').value,
+                studentEmail: document.getElementById('studentEmail').value,
+                roomNumber: document.getElementById('roomNumber').value,
+                meetingDate: document.getElementById('meetingDate').value,
+                meetingTime: document.getElementById('meetingTime').value,
+                inchargeNames: Array.from(document.getElementsByClassName('incharge')).map(input => input.value),
+                inchargeEmails: Array.from(document.getElementsByClassName('inchargeEmail')).map(input => input.value)
+            };
 
             fetch('../actions/schedule_hearing_action.php', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
             })
-            .then(response => response.text()) // Get response as text
+            .then(response => response.text())
             .then(text => {
-                console.log('Response Text:', text); // Log the raw response text
+                console.log('Response Text:', text);
                 try {
                     const data = JSON.parse(text); // Attempt to parse JSON
                     if (data.status === 'success') {
@@ -393,6 +395,7 @@ include '../settings/core.php';
             });
         }
     });
+
 </script>
 <!-- Include EmailJS SDK if needed -->
 </body>
