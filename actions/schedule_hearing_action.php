@@ -3,11 +3,10 @@
 include '../settings/core.php';
 include '../settings/connection.php';
 include '../actions/email_send.php'; // Make sure this path is correct
-
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    error_log(print_r($_POST, true));
+    
     $meetingTitle = mysqli_real_escape_string($connection, $_POST['meetingTitle']);
     $studentName = mysqli_real_escape_string($connection, $_POST['studentName']);
     $studentEmail = mysqli_real_escape_string($connection, $_POST['studentEmail']);
@@ -60,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (send_email_to($studentEmail, $subject, $body)) {
                 echo json_encode(['status' => 'success', 'message' => 'Hearing scheduled successfully and email sent to student.']);
             } else {
-                echo json_encode(['status' => 'success', 'message' => 'Hearing scheduled successfully, but failed to send email to student.','sql_error' => $errorMessage, $name,$email,$hearingId,$sql]);
+                echo json_encode(['status' => 'success', 'message' => 'Hearing scheduled successfully, but failed to send email to student.','sql_error' => $errorMessage]);
             }
         } else {
             echo json_encode(['status' => 'error', 'message' => 'Failed to add persons in charge.']);
