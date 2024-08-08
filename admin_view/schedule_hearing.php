@@ -196,6 +196,10 @@ include '../settings/core.php';
             color: white;
         }
     </style>
+
+
+
+
 </head>
 <body>
 
@@ -276,7 +280,13 @@ include '../settings/core.php';
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+
+
+
+    
     <script>
+
         // Update the clock
         function updateClock() {
             const clock = document.getElementById('clock');
@@ -307,18 +317,13 @@ include '../settings/core.php';
             emailGroup.removeChild(button.parentNode);
         }
 
-        // Function to send email notifications (uses EmailJS)
-        function sendEmail(toEmail, subject, body) {
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-                to_email: toEmail,
-                subject: subject,
-                message: body
-            }).then(function(response) {
-                console.log("Email sent successfully!", response.status, response.text);
-            }, function(error) {
-                console.error("Failed to send email", error);
-            });
-        }
+
+        </script>
+
+
+<script>
+
+       
 
         document.getElementById('meetingForm').addEventListener('submit', function(e) {
             e.preventDefault(); // Prevent the default form submission
@@ -346,9 +351,10 @@ fetch('../actions/schedule_hearing_action.php', {
         const data = JSON.parse(text); // Attempt to parse JSON
         if (data.status === 'success') {
             alert(data.message);
-            // Optionally, clear the form or update the UI
-           
             document.getElementById('meetingForm').reset();
+
+
+
         } else {
             alert(data.message);
         }
@@ -366,11 +372,6 @@ fetch('../actions/schedule_hearing_action.php', {
         });
     </script>
     <!-- Include EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function(){
-            emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS user ID
-        })();
-    </script>
+    
 </body>
 </html>

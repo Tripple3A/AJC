@@ -1,0 +1,10 @@
+{
+    "name": "vendor/autoload.php",
+    "description": "AJMS",
+    "type": "project",
+    "require": {
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "license": "MIT",
+    "minimum-stability": "stable"
+}
