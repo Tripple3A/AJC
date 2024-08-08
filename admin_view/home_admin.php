@@ -194,11 +194,7 @@ include '../settings/core.php';
     }
 </script>
 
-<script>
-    document.getElementById('addPolicyButton').addEventListener('click', function() {
-        $('#addPolicyModal').modal('show');
-    });
-</script>
+
 </head>
 
 <body>
@@ -400,6 +396,12 @@ include '../settings/core.php';
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+    document.getElementById('addPolicyButton').addEventListener('click', function() {
+        $('#addPolicyModal').modal('show');
+    });
+</script>
 
    
 
