@@ -37,6 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             mkdir($evidenceDir, 0777, true);
         }
         $evidencePath = $evidenceDir . basename($_FILES['evidence']['name']);
+        echo json_encode(array('evidence' => 'Moving to: ' . $evidencePath));
+        exit();
         if (!move_uploaded_file($_FILES['evidence']['tmp_name'], $evidencePath)) {
             echo json_encode(array('evidence' => 'Failed to upload evidence.'));
             exit();
