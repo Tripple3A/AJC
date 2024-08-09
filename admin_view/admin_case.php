@@ -357,7 +357,7 @@ include '../settings/core.php';
             e.preventDefault();
             var description = document.getElementById('caseDescription').value;
             var dateReported = document.getElementById('dateReported').value;
-            var status = document.getElementById('caseStatus').value;
+           
 
             // Add new case to the table
             var newRow = document.createElement('tr');
@@ -371,10 +371,7 @@ include '../settings/core.php';
                         <option value="Completed"${status === 'Completed' ? ' selected' : ''}>Completed</option>
                     </select>
                 </td>
-                <td>
-                    <button class="btn btn-warning btn-sm" onclick="editCase(this)">Edit</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteCase(this)">Delete</button>
-                </td>
+                
             `;
             document.getElementById('casesTable').appendChild(newRow);
 
