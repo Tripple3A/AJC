@@ -275,22 +275,26 @@ include '../settings/core.php';
                                 <?php
                                 include "../actions/fetch_policies.php";
                                 $policyList = getPolicies();
-                                foreach ($policyList as $policy) {
-                                    echo "
-                                        <li class='list-group-item'>
-                                            <div>
-                                                <h5>{$policy['policy_title']}</h5>
-                                                <p>{$policy['policy_description']}</p>
-                                            </div>
-                                            <div class='d-flex justify-content-end'>
-                                                <button class='btn btn-wine btn-sm btn-icon' onclick='updatePolicy({$policy['policy_id']})'>
-                                                    <i class='bx bx-edit'></i> Update
-                                                </button>
-                                                <button class='btn btn-danger btn-sm btn-icon ml-2' onclick='deletePolicy({$policy['policy_id']})'>
-                                                    <i class='bx bx-trash'></i> Delete
-                                                </button>
-                                            </div>
-                                        </li>";
+                                if (empty($policyList)) {
+                                    echo "<li class='list-group-item text-center'>No policies found.</li>";
+                                } else {
+                                    foreach ($policyList as $policy) {
+                                        echo "
+                                            <li class='list-group-item'>
+                                                <div>
+                                                    <h5>{$policy['policy_title']}</h5>
+                                                    <p>{$policy['policy_description']}</p>
+                                                </div>
+                                                <div class='d-flex justify-content-end'>
+                                                    <button class='btn btn-wine btn-sm btn-icon' onclick='updatePolicy({$policy['policy_id']})'>
+                                                        <i class='bx bx-edit'></i> Update
+                                                    </button>
+                                                    <button class='btn btn-danger btn-sm btn-icon ml-2' onclick='deletePolicy({$policy['policy_id']})'>
+                                                        <i class='bx bx-trash'></i> Delete
+                                                    </button>
+                                                </div>
+                                            </li>";
+                                    }
                                 }
                                 ?>
                             </ul>
