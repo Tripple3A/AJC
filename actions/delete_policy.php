@@ -15,7 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "DELETE FROM Policy WHERE policy_id=$policy_id AND user_id=$user_id";
 
     if (mysqli_query($connection, $query)) {
-        echo json_encode(['success' => 'Policy deleted successfully.']);
+        $affected_rows = mysqli_affected_rows($connection);
+        echo json_encode(['success' => 'Policy deleted successfully.',
+            'affected_rows' => $affected_rows]);
     } else {
         $error = mysqli_error($connection);
         echo json_encode(['error' => 'An error occurred while deleting the policy.', 'details' => $error]);
