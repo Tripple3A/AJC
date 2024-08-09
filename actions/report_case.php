@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle file upload
     $evidencePath = null;
     if (isset($_FILES['evidence']) && $_FILES['evidence']['error'] == 0) {
-        $evidenceDir = 'uploads/evidence/';
+        $evidenceDir = '/opt/lampp/htdocs/AJC/uploads/evidence/';
         if (!is_dir($evidenceDir)) {
             mkdir($evidenceDir, 0777, true);
         }
