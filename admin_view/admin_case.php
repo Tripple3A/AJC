@@ -357,7 +357,7 @@ include '../settings/core.php';
             e.preventDefault();
             var description = document.getElementById('caseDescription').value;
             var dateReported = document.getElementById('dateReported').value;
-           
+            var status = document.getElementById('caseStatus').value;
 
             // Add new case to the table
             var newRow = document.createElement('tr');
