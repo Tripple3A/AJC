@@ -526,6 +526,7 @@ include '../settings/core.php';
         });
 
         function deletePolicy(id) {
+            console.log('Policy ID:', id); 
             if (confirm('Are you sure you want to delete this policy?')) {
                 $.ajax({
                     type: "POST",
