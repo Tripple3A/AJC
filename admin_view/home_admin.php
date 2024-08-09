@@ -9,11 +9,11 @@ include '../settings/core.php';
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>AJMS</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preload" href="https://unpkg.com/boxicons@2.1.4/fonts/boxicons.woff2" as="font" type="font/woff2" crossorigin="anonymous">
-   
+
     <style>
         body {
             background-color: #f8f9fa;
@@ -185,15 +185,15 @@ include '../settings/core.php';
         }
     </style>
 
-<script>
-    function showSection(sectionId) {
-        const sections = document.getElementsByClassName('content-section');
-        for (let i = 0; i < sections.length; i++) {
-            sections[i].classList.remove('active');
+    <script>
+        function showSection(sectionId) {
+            const sections = document.getElementsByClassName('content-section');
+            for (let i = 0; i < sections.length; i++) {
+                sections[i].classList.remove('active');
+            }
+            document.getElementById(sectionId).classList.add('active');
         }
-        document.getElementById(sectionId).classList.add('active');
-    }
-</script>
+    </script>
 
 
 </head>
@@ -253,8 +253,8 @@ include '../settings/core.php';
                     <input type="text" class="form-control" id="searchInput" placeholder="Search for a policy...">
                 </div>
                 <button id="addPolicyButton" class="btn btn-wine" data-toggle="modal" data-target="#addPolicyModal">
-    <i class='bx bx-plus'></i> Add Policy
-</button>
+                    <i class='bx bx-plus'></i> Add Policy
+                </button>
             </div>
             <div class="row">
                 <div class="col-md-3">
@@ -280,20 +280,20 @@ include '../settings/core.php';
                                 } else {
                                     foreach ($policyList as $policy) {
                                         echo "
-                                            <li class='list-group-item'>
-                                                <div>
-                                                    <h5>{$policy['policy_title']}</h5>
-                                                    <p>{$policy['policy_description']}</p>
-                                                </div>
-                                                <div class='d-flex justify-content-end'>
-                                                    <button class='btn btn-wine btn-sm btn-icon' onclick='updatePolicy({$policy['policy_id']})'>
-                                                        <i class='bx bx-edit'></i> Update
-                                                    </button>
-                                                    <button class='btn btn-danger btn-sm btn-icon ml-2' onclick='deletePolicy({$policy['policy_id']})'>
-                                                        <i class='bx bx-trash'></i> Delete
-                                                    </button>
-                                                </div>
-                                            </li>";
+                <li class='list-group-item'>
+                    <div>
+                        <h5>{$policy['policy_title']}</h5>
+                        <p>{$policy['policy_description']}</p>
+                    </div>
+                    <div class='d-flex justify-content-end'>
+                        <button class='btn btn-wine btn-sm btn-icon' onclick='updatePolicy({$policy['policy_id']})'>
+                            <i class='bx bx-edit'></i> Update
+                        </button>
+                        <button class='btn btn-danger btn-sm btn-icon ml-2' onclick='deletePolicy({$policy['policy_id']})'>
+                            <i class='bx bx-trash'></i> Delete
+                        </button>
+                    </div>
+                </li>";
                                     }
                                 }
                                 ?>
@@ -341,7 +341,7 @@ include '../settings/core.php';
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addPolicyModalLabel">Add New Policy</h5>
-                        <button   type="button" class="close" data-dismiss="modal"   aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -394,14 +394,12 @@ include '../settings/core.php';
             </div>
         </div>
     </div>
-    
+
     <script>
-
-    document.getElementById('addPolicyButton').addEventListener('click', function() {
-    $('#addPolicyModal').modal('show');
-});
-
-</script>
+        document.getElementById('addPolicyButton').addEventListener('click', function() {
+            $('#addPolicyModal').modal('show');
+        });
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -411,10 +409,10 @@ include '../settings/core.php';
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-   
+
 
     <script>
-        document.getElementById('addPolicyForm').addEventListener('submit', function (event) {
+        document.getElementById('addPolicyForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var formElement = this;
             var formData = new FormData(formElement);
@@ -450,7 +448,7 @@ include '../settings/core.php';
                 processData: false,
                 contentType: false,
                 dataType: "json",
-                success: function (response) {
+                success: function(response) {
                     if (response.success) {
                         $('#addPolicyModal').modal('hide');
                         alert(response.success);
@@ -460,13 +458,13 @@ include '../settings/core.php';
                         alert('An error occurred while adding policy');
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     console.log('AJAX Error:', textStatus, errorThrown);
                 }
             });
         });
 
-        document.getElementById('searchInput').addEventListener('keyup', function () {
+        document.getElementById('searchInput').addEventListener('keyup', function() {
             var input = this.value.toLowerCase();
             var items = document.getElementsByClassName('list-group-item');
             for (var i = 0; i < items.length; i++) {
@@ -480,9 +478,11 @@ include '../settings/core.php';
             $.ajax({
                 type: "GET",
                 url: "../actions/get_policy.php",
-                data: { policy_id: id },
+                data: {
+                    policy_id: id
+                },
                 dataType: "json",
-                success: function (response) {
+                success: function(response) {
                     if (response.error) {
                         alert(response.error);
                     } else {
@@ -492,13 +492,13 @@ include '../settings/core.php';
                         $('#updatePolicyModal').modal('show');
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     console.log('AJAX Error:', textStatus, errorThrown);
                 }
             });
         }
 
-        document.getElementById('updatePolicyForm').addEventListener('submit', function (event) {
+        document.getElementById('updatePolicyForm').addEventListener('submit', function(event) {
             event.preventDefault();
             var formElement = this;
             var formData = new FormData(formElement);
@@ -510,7 +510,7 @@ include '../settings/core.php';
                 processData: false,
                 contentType: false,
                 dataType: "json",
-                success: function (response) {
+                success: function(response) {
                     if (response.success) {
                         $('#updatePolicyModal').modal('hide');
                         alert(response.success);
@@ -519,7 +519,7 @@ include '../settings/core.php';
                         alert(response.error);
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     console.log('AJAX Error:', textStatus, errorThrown);
                 }
             });
@@ -530,9 +530,11 @@ include '../settings/core.php';
                 $.ajax({
                     type: "POST",
                     url: "../actions/delete_policy.php",
-                    data: { policy_id: id },
+                    data: {
+                        policy_id: id
+                    },
                     dataType: "json",
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
                             alert(response.success);
                             location.reload(); // Reload the page to see the changes
@@ -540,7 +542,7 @@ include '../settings/core.php';
                             alert(response.error);
                         }
                     },
-                    error: function (jqXHR, textStatus, errorThrown) {
+                    error: function(jqXHR, textStatus, errorThrown) {
                         console.log('AJAX Error:', textStatus, errorThrown);
                     }
                 });
@@ -607,8 +609,7 @@ include '../settings/core.php';
                     // Generate chart
                     const chartData = {
                         labels: Object.keys(categories),
-                        datasets: [
-                            {
+                        datasets: [{
                                 label: 'Total Cases',
                                 data: Object.values(categories),
                                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -662,9 +663,6 @@ include '../settings/core.php';
                     console.error('Error fetching report data:', error);
                 });
         }
-
-        
-
     </script>
 </body>
 
