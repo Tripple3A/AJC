@@ -536,6 +536,7 @@ include '../settings/core.php';
                     },
                     dataType: "json",
                     success: function(response) {
+                        console.log('Server Response:', response);
                         if (response.success) {
                             alert(response.success);
                             location.reload(); // Reload the page to see the changes
