@@ -7,8 +7,10 @@ function getPolicies(){
     $result = mysqli_query($connection, $query);
     $policies = [];
 
-    while ($row = mysqli_fetch_assoc($result)) {
-        $policies[] = $row;
+    if ($result) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $policies[] = $row;
+        }
     }
     return $policies;
 }

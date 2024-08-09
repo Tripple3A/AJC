@@ -272,14 +272,14 @@ include '../settings/core.php';
                                 <h5 class="mb-0">Policy List</h5>
                             </div>
                             <ul class="list-group list-group-flush" id="policyList">
-                                <?php
-                                include "../actions/fetch_policies.php";
-                                $policyList = getPolicies();
-                                if (empty($policyList)) {
-                                    echo "<li class='list-group-item text-center'>No policies found.</li>";
-                                } else {
-                                    foreach ($policyList as $policy) {
-                                        echo "
+    <?php
+    include "../actions/fetch_policies.php";
+    $policyList = getPolicies();
+    if (empty($policyList)) {
+        echo "<li class='list-group-item text-center'>No policies found.</li>";
+    } else {
+        foreach ($policyList as $policy) {
+            echo "
                 <li class='list-group-item'>
                     <div>
                         <h5>{$policy['policy_title']}</h5>
@@ -294,10 +294,10 @@ include '../settings/core.php';
                         </button>
                     </div>
                 </li>";
-                                    }
-                                }
-                                ?>
-                            </ul>
+        }
+    }
+    ?>
+</ul>
                         </div>
                     </div>
 
