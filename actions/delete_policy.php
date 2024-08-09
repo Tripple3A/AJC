@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $policy_id = intval($_POST['policy_id']);
 
-    $query = "DELETE FROM Policy WHERE policy_id=$policy_id AND user_id=$user_id";
+    $query = "DELETE FROM Policy WHERE policy_id=$policy_id";
 
     if (mysqli_query($connection, $query)) {
         $affected_rows = mysqli_affected_rows($connection);
