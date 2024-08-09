@@ -1,5 +1,6 @@
 <?php
 include '../settings/core.php';
+include '../actions/fetch_policies.php';
 ?>
 
 <!DOCTYPE html>
@@ -207,6 +208,14 @@ include '../settings/core.php';
                         <p class="card-text">Information about school policies goes here.</p>
                         <ul id="policyList" class="list-group list-group-flush">
                             <!-- Policies will be dynamically loaded here -->
+                            <?php 
+                            $policies = getPolicies();
+                            foreach ($policies as $policy): ?>
+                                <li class="list-group-item">
+                                    <h6><?php echo htmlspecialchars($policy['policy_title']); ?></h6>
+                                    <p><?php echo htmlspecialchars($policy['policy_description']); ?></p>
+                                </li>
+                            <?php endforeach; ?>
                         </ul>
                         <a href="https://www.ashesi.edu.gh/judicial-council-records/" class="btn btn-wine mt-3">More</a>
                     </div>
