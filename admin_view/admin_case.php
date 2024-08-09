@@ -216,7 +216,7 @@ include '../settings/core.php';
                     <th scope="col">Case Description</th>
                     <th scope="col">Date Reported</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Actions</th>
+                    
                 </tr>
             </thead>
             <tbody id="casesTable">
@@ -242,8 +242,7 @@ include '../settings/core.php';
             echo '</select>';
             echo '</td>';
             echo '<td>';
-            echo '<button class="btn btn-warning btn-sm" onclick="editCase(this, ' . htmlspecialchars($case['case_id']) . ')">Edit</button>';
-            echo '<button class="btn btn-danger btn-sm" onclick="deleteCase(this, ' . htmlspecialchars($case['case_id']) . ')">Delete</button>';
+            
             echo '</td>';
             echo '</tr>';
         }
@@ -294,7 +293,6 @@ include '../settings/core.php';
 
 <!-- Bootstrap JS -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- 
     <script>
         // JavaScript for search functionality
         document.getElementById('searchInput').addEventListener('keyup', function() {
@@ -371,7 +369,10 @@ include '../settings/core.php';
                         <option value="Completed"${status === 'Completed' ? ' selected' : ''}>Completed</option>
                     </select>
                 </td>
-                
+                <td>
+                    <button class="btn btn-warning btn-sm" onclick="editCase(this)">Edit</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteCase(this)">Delete</button>
+                </td>
             `;
             document.getElementById('casesTable').appendChild(newRow);
 
